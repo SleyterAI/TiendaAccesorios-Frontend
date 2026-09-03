@@ -1,0 +1,146 @@
+.categories-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 32px;
+}
+
+.categories-section h2 {
+  color: black;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.category-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  height: 320px;
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0b101b;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.category-card .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(5, 8, 14, 0.95) 0%,
+    rgba(5, 8, 14, 0.4) 50%,
+    transparent 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+
+.category-card h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+}
+
+.category-card span {
+  color: #00e5ff;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.9;
+  transform: translateX(0);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Efectos Interactivos (Hover) */
+.category-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 229, 255, 0.15);
+}
+
+.category-card:hover img {
+  transform: scale(1.08);
+}
+
+.category-card:hover span {
+  transform: translateX(6px);
+  opacity: 1;
+}
+
+/* Estados de carga y error */
+.loader, .error-message {
+  color: #727e90;
+  font-size: 15px;
+  padding: 20px 0;
+}
+
+.error-message {
+  color: #ff4f4f;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+  .categories-section {
+    padding: 40px 20px;
+  }
+
+  .category-card {
+    height: 260px;
+  }
+}
+
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.toggle-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: black;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  border-color: #00e5ff;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.toggle-btn .arrow {
+  transition: transform 0.3s ease;
+}
+
+.toggle-btn .arrow.rotated {
+  transform: rotate(180deg);
+}

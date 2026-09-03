@@ -21,6 +21,7 @@ export const routes: Routes = [
     path: '',
     component: LandingPageComponent,
   },
+  /*
   {
     path: 'productos/:id',
     component: ProductsDetailPageComponent,
@@ -93,5 +94,5 @@ export const routes: Routes = [
     //path: 'me',
     //canActivate: [authGuard],
     //component: MeComponent,
-  }
+  }*/
 ];

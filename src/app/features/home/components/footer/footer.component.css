@@ -65,10 +65,111 @@
   letter-spacing: 2px;
 }
 
+/* Continuación de .footer-brand p */
 .footer-brand p {
   margin: 20px 0;
-
   color: #727e90;
-
   font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Redes Sociales */
+.socials {
+  display: flex;
+  gap: 12px;
+}
+
+.socials a {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #727e90;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: lowercase;
+  transition: all 0.25s ease;
+}
+
+.socials a:hover {
+  background: rgba(0, 229, 255, 0.1);
+  border-color: #00e5ff;
+  color: #00e5ff;
+  transform: translateY(-3px);
+}
+
+/* Columnas de Navegación */
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-column h3 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.footer-column a {
+  color: #727e90;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.footer-column a:hover {
+  color: #00e5ff;
+  transform: translateX(4px);
+}
+
+/* Sección Inferior / Copyright */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  color: #515d6e;
+  font-size: 13px;
+}
+
+/* Adaptación Responsiva (Móviles y Tablets) */
+@media (max-width: 900px) {
+  .footer-main {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .footer-brand {
+    grid-column: span 2;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    padding: 50px 20px 20px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-brand {
+    grid-column: span 1;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
 }

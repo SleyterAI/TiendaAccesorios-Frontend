@@ -1,0 +1,37 @@
+<section class="categories-section">
+  <h2>Que te interesa comprar hoy ... ?</h2>
+
+  @if (categoriesResource.isLoading()) {
+    <div class="loader">Cargando categorías...</div>
+  }
+
+  @if (categoriesResource.error()) {
+    <div class="error-message">Hubo un error al cargar las categorías.</div>
+  }
+
+  @if (categoriesResource.value(); as categories) {
+    <div class="categories-grid">
+      @for (cat of visibleCategories(); track cat.id) {
+        <a [routerLink]="['/productos']" class="category-card">
+          <img [src]="" [alt]="cat.name" loading="lazy" />
+          <div class="overlay">
+            <h3>{{ cat.name }}</h3>
+            <span>Ver colección →</span>
+          </div>
+        </a>
+      } @empty {
+        <p>No hay categorías disponibles.</p>
+      }
+    </div>
+
+    <!-- Botón condicional si hay más de 4 categorías -->
+    @if (categories.length > 4) {
+      <div class="toggle-container">
+        <button (click)="toggleShowAll()" class="toggle-btn">
+          {{ showAll() ? 'Ver menos categorías' : 'Ver todas las categorías' }}
+          <span class="arrow" [class.rotated]="showAll()">↓</span>
+        </button>
+      </div>
+    }
+  }
+</section>
