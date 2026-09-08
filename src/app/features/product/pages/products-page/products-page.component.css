@@ -1,0 +1,111 @@
+/* Contenedor principal de la sección de productos */
+#productos {
+  max-width: 100%;
+  background: #030509;
+  padding: 60px max(32px, calc((100% - 1280px) / 2));
+  min-height: calc(100vh - 160px);
+}
+
+#productos h2 {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  letter-spacing: -0.5px;
+}
+
+#productos h2 strong {
+  background: linear-gradient(135deg, #00e5ff, #4f7cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Filtro de Categorías */
+.category-filter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 20px;
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.category-filter label {
+  color: #727e90;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.category-filter select {
+  background: #05080e;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.category-filter select:hover,
+.category-filter select:focus {
+  border-color: #00e5ff;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+}
+
+.category-filter select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Estilo para las opciones del desplegable en navegadores oscuros */
+.category-filter option {
+  background: #0b101b;
+  color: #fff;
+}
+
+/* Cuadrícula de Productos */
+.products-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+/* Mensajes de carga, error o vacío */
+.mensaje {
+  color: #727e90;
+  font-size: 16px;
+  text-align: center;
+  padding: 60px 0;
+}
+
+.mensaje.error {
+  color: #ff4f4f;
+}
+
+/* Adaptación Responsiva para Móviles y Tablets */
+@media (max-width: 768px) {
+  #productos {
+    padding: 40px 20px;
+  }
+
+  .category-filter {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .category-filter select {
+    width: 100%;
+  }
+
+  #productos h2 {
+    font-size: 26px;
+  }
+}

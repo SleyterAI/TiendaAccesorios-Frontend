@@ -1,0 +1,32 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.nav-link {
+  position: relative;
+  color: #9ba7b8;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+.nav-link:hover,
+.nav-link.active {
+  color: #fff;
+}
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -28px;
+  height: 2px;
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
+}
+@media (max-width: 850px) {
+  .navigation {
+    display: none;
+  }
+}

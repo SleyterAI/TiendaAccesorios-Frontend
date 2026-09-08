@@ -1,0 +1,25 @@
+<article class="product-card"
+  [routerLink]="['/products', product().id]">
+  <img [src]="product().imageUrl" [alt]="product().name" />
+
+  <div class="product-info">
+    <span class="category">
+      {{ product().categoryName }}
+    </span>
+
+    <h4>{{ product().name }}</h4>
+
+    <strong>S/ {{ product().price }}</strong>
+
+    @if (product().stock > 0) {
+    <strong><span class="stock">DISPONIBLE</span></strong>
+    } @else {
+    <strong><span class="out-of-stock">AGOTADO</span></strong>
+    }
+    <button class="btn"(click)="addToCart();
+    $event.stopPropagation()" [disabled]="product().stock <= 0">
+      Agregar
+    </button>
+  </div>
+
+</article>

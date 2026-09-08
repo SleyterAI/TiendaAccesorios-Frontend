@@ -1,0 +1,16 @@
+.mensaje-menu-container {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.frase {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  background: linear-gradient(135deg, #fff 40%, #00e5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}

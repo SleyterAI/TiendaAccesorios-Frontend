@@ -1,1 +1,34 @@
-<p>user-menu works!</p>
+<div class="user-menu-container">
+  <!-- User -->
+  <button class="icon-button" aria-label="Mi cuenta"
+    [attr.aria-expanded]="menuOpen()"
+    (click)="toggleMenu()">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"></path>
+    </svg>
+  </button>
+
+  @if (menuOpen()) {
+  <div class="user-dropdown">
+    <a routerLink="/register" (click)="closeMenu()">
+      Registrarse
+    </a>
+
+    <a routerLink="/login" (click)="closeMenu()">
+      Iniciar sesión
+    </a>
+
+
+    @if(authenticated()){
+    <a routerLink="/me" (click)="closeMenu()">
+      Mi Perfil
+    </a>
+    <a routerLink="" (click)="logout()" (click)="closeMenu()">
+      Cerrar sesión
+    </a>
+    }
+
+  </div>
+  }
+</div>

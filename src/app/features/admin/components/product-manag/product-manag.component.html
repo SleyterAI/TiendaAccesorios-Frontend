@@ -1,0 +1,141 @@
+<h1>Gestión de productos:</h1>
+
+<div id="productos" class="table-container">
+  <button
+    class="btnCreateProducto"
+    routerLink="create"
+    routerLinkActive="active">
+    Agregar nuevo producto
+  </button>
+
+  @if (cargando) {
+  <p class="mensaje">Cargando productos...</p>
+  }
+
+  @if (error) {
+  <p class="mensaje error">{{ error }}</p>
+  }
+
+  @if (!cargando && !error && productos.length > 0) {
+  <div class="products-container">
+
+    <div class="desktop-view">
+      <table class="productos-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Activo</th>
+            <th>Categoria Nombre</th>
+            <th>Habilitar</th>
+            <th>Actualizar</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (producto of productos; track producto.id) {
+          <tr>
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.name }}</td>
+            <td>{{ producto.description }}</td>
+            <td>{{ producto.price }}</td>
+            <td>{{ producto.stock }}</td>
+            <td>{{ producto.visible }}</td>
+            <td>{{ producto.categoryName }}</td>
+
+            <td>
+              <button
+                type="button"
+                (click)="cambiarActivo(producto)">🔄</button>
+            </td>
+            <td>
+              <button
+                [routerLink]="['update', producto.id]"
+                routerLinkActive="active">⚡</button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mobile-view">
+      @for (producto of productos; track producto.id) {
+
+      <div class="product-card">
+
+        <div class="product-img">
+          <img src={{producto.imageUrl}}>
+        </div>
+
+        <div class="product-info">
+          <h4>{{ producto.name }}</h4>
+          <div class="product-details">
+            <span>Precio</span>
+            <strong>{{ producto.price }}</strong>
+
+            <span>Stock</span>
+            <strong>{{ producto.stock }}</strong>
+
+            <span>Activo</span>
+            <strong>{{ producto.visible }}</strong>
+
+            <span>Categoria</span>
+            <strong>{{ producto.categoryName }}</strong>
+
+          </div>
+
+          <div class="buttons">
+            <div class="activar">
+              <button
+                type="button"
+                class="btn-activar"
+                (click)="cambiarActivo(producto)">Activar</button>
+            </div>
+
+            <div class="actualizar">
+              <button
+                [routerLink]="['update', producto.id]"
+                routerLinkActive="active">Actualizar</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      }
+    </div>
+  </div>
+  }
+
+  @if (!cargando && !error && productos.length === 0) {
+  <p class="mensaje">No hay productos disponibles.</p>
+  }
+
+</div>
+
+@if (mostrarExito) {
+<div class="success-overlay">
+  <div class="success-popup">
+    <div class="check-circle">
+      ✓
+    </div>
+
+    <h3>{{ tituloPopup }}</h3>
+    <p>{{ mensajePopup }}</p>
+  </div>
+</div>
+
+}
+
+@if (error) {
+<div class="error-message">
+  {{ error }}
+</div>
+}
+

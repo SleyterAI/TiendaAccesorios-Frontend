@@ -1,1 +1,96 @@
-<p>checkout-product works!</p>
+<section class="checkout-container">
+  <h2 class="section-title">Carro ({{ cartCount() }} productos)</h2>
+
+  @if (cart() === null) {
+    <div class="empty-cart">
+      <h3>Tu carrito está vacío</h3>
+      <p>Agrega algunos productos para comenzar.</p>
+    </div>
+  } @else {
+    <div class="checkout-grid">
+
+      <!-- Lista de productos -->
+      <div class="products-list">
+        @for (item of cart()!.items; track item.id) {
+          <div class="product-card-item">
+
+            <!-- Imagen -->
+            <div class="product-img-box">
+              <img [src]="item.imageUrl" [alt]="item.productName">
+            </div>
+
+            <!-- Descripción -->
+            <div class="product-info">
+              <h4 class="product-name">
+                {{ item.productName }}</h4>
+              <span class="product-unit-price">
+                S/ {{ item.price | number:'1.2-2' }}</span>
+            </div>
+
+            <!-- Subtotal -->
+            <div class="product-subtotal-box">
+              <span class="subtotal-val">
+                S/ {{ item.subTotal | number:'1.2-2' }}</span>
+            </div>
+
+            <!-- Cantidad y límite [disabled]="item.quantity <= 1"-->
+            <div class="product-qty-box">
+              <div class="quantity-control">
+                <button class="qty-btn"
+                  (click)="decreaseQuantity(item.productId)"
+                  >-</button>
+
+                <span class="qty-value">{{ item.quantity }}</span>
+
+                <button class="qty-btn"
+                  (click)="increaseQuantity(item.productId)"
+                  [disabled]="item.quantity === 4">+</button>
+              </div>
+              <small class="qty-limit">Max 4 unidades</small>
+            </div>
+
+            <!-- Eliminar -->
+            <div class="product-action-box">
+              <button class="btn-delete"
+                (click)="removeItem(item.productId)" aria-label="Eliminar">
+                X
+              </button>
+            </div>
+
+          </div>
+        }
+      </div>
+
+      <!-- Resumen de la compra -->
+      <div class="summary-box">
+        <div class="summary-card">
+          <h3 class="summary-title">Resumen de la compra</h3>
+
+          <div class="summary-row">
+            <span>Productos ({{ cartCount() }})</span>
+            <strong>S/ {{ cart()!.totalPrice | number:'1.2-2' }}</strong>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-row">
+            <span>Descuentos</span>
+            <strong>S/ 0.00</strong>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-row total-row">
+            <span class="fw-bold text-white">Total:</span>
+            <strong class="summary-total">S/ {{ cart()!.totalPrice | number:'1.2-2' }}</strong>
+          </div>
+
+          <button class="btn-checkout" routerLink="/checkout/payment">
+            Continuar compra
+          </button>
+        </div>
+      </div>
+
+    </div>
+  }
+</section>

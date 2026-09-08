@@ -1,0 +1,252 @@
+.checkout-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 0;
+  color: #dce3ed;
+}
+
+.section-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tarjeta de producto horizontal */
+.product-card-item {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s ease;
+}
+
+.product-card-item:hover {
+  border-color: rgba(0, 229, 255, 0.2);
+}
+
+.product-img-box {
+  width: 70px;
+  height: 70px;
+  background: #080c14;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+
+.product-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  flex: 1;
+  min-width: 140px;
+}
+
+.product-name {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.product-unit-price {
+  color: #9ba7b8;
+  font-size: 13px;
+}
+
+.product-subtotal-box {
+  min-width: 90px;
+  text-align: left;
+}
+
+.subtotal-val {
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.product-qty-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 4px 8px;
+  gap: 8px;
+}
+
+.qty-btn {
+  background: transparent;
+  border: none;
+  color: #dce3ed;
+  font-weight: bold;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: rgba(0, 229, 255, 0.15);
+  color: #00e5ff;
+}
+
+.qty-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.qty-value {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.qty-limit {
+  font-size: 11px;
+  color: #9ba7b8;
+}
+
+.btn-delete {
+  background: rgba(255, 92, 92, 0.05);
+  border: 1px solid rgba(255, 92, 92, 0.2);
+  color: #ff5c5c;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+  background: rgba(255, 92, 92, 0.15);
+  border-color: rgba(255, 92, 92, 0.4);
+}
+
+/* Tarjeta de Resumen */
+.summary-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 100px;
+}
+
+.summary-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #9ba7b8;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.summary-row strong {
+  color: #fff;
+}
+
+.total-row {
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.summary-total {
+  color: #00e5ff !important;
+  font-size: 1.25rem !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.summary-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 16px 0;
+}
+
+.btn-checkout {
+  width: 100%;
+  background: linear-gradient(135deg, #00e5ff, #4f7cff);
+  color: #07111f;
+  border: none;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+.btn-checkout:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.empty-cart {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 50px;
+  text-align: center;
+  color: #9ba7b8;
+}
+
+.empty-cart h3 {
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 992px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+  .summary-card {
+    position: static;
+  }
+}

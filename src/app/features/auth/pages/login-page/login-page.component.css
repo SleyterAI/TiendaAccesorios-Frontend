@@ -1,0 +1,10 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #111827;
+}
+
+.content {
+  flex: 1;
+}

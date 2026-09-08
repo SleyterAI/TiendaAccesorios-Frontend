@@ -1,0 +1,83 @@
+.menu-button {
+  border: 0;
+  background: transparent;
+  color: #dce3ed;
+  cursor: pointer;
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 9px;
+}
+.menu-button span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin: 5px 0;
+  border-radius: 10px;
+  background: #fff;
+}
+.mobile-navigation {
+  display: none;
+}
+@media (max-width: 850px) {
+  .menu-button {
+    display: block;
+  }
+  .mobile-navigation {
+    display: flex;
+    position: absolute;
+    top: 100%; /* Se coloca exactamente debajo del header */
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 24px 24px;
+    background: rgba(8, 12, 20, 0.95); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+    z-index: 1001; /* Asegura que flote por encima de todo el contenido */
+  }
+
+  .mobile-navigation a {
+    padding: 12px 16px;
+    color: #b8c2d0;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-navigation a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+@media (max-width: 500px) {
+  .mobile-navigation {
+    display: flex;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 18px 20px;
+    background: #080c14;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+  .mobile-navigation a {
+    padding: 14px;
+    color: #b8c2d0;
+    text-decoration: none;
+    border-radius: 8px;
+  }
+  .mobile-navigation a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}

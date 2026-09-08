@@ -1,0 +1,90 @@
+<app-header></app-header>
+
+@if (producto(); as producto) {
+  <main class="product-detail">
+    <div class="product-container">
+
+      <div class="product-card">
+
+        <!-- Imagen -->
+        <section class="product-image-section">
+          <div class="product-image-wrapper">
+            <img
+              [src]="producto.imageUrl"
+              [alt]="producto.name"
+              class="product-image"
+            />
+          </div>
+        </section>
+
+        <!-- Información -->
+        <section class="product-info">
+
+          <span class="product-category">
+            {{ producto.categoryName }}
+          </span>
+
+          <h1 class="product-title">
+            {{ producto.name }}
+          </h1>
+
+          <div class="product-price">
+            S/ {{ producto.price | number:'1.2-2' }}
+          </div>
+
+          @if (producto.stock > 0) {
+            <div class="stock stock-available">
+              <span class="stock-dot"></span>
+              Disponible
+              <span class="stock-quantity">
+                {{ producto.stock }} unidades
+              </span>
+            </div>
+          } @else {
+            <div class="stock stock-unavailable">
+              <span class="stock-dot"></span>
+              Agotado
+            </div>
+          }
+
+          <div class="product-divider"></div>
+
+          <div class="product-description">
+            <h3>Descripción</h3>
+
+            <p>
+              {{ producto.description }}
+            </p>
+          </div>
+
+          <div class="product-actions">
+
+            @if (producto.stock > 0 && producto.visible) {
+
+              <button
+                type="button"
+                class="btn-add-cart"
+                >
+                <span class="cart-icon"
+                >
+                🛒</span>
+                Agregar al carrito
+              </button>
+
+            } @else {
+              <button
+                type="button"
+                class="btn-add-cart disabled"
+                disabled>
+                Producto agotado
+              </button>
+            }
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+}
+
+<app-footer></app-footer>
+

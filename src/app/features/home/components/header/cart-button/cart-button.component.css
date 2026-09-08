@@ -1,0 +1,35 @@
+.cart-button {
+  border: 0;
+  background: transparent;
+  color: #dce3ed;
+  cursor: pointer;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+}
+.cart-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cart-count {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #00e5ff;
+  color: #06111d;
+  font-size: 10px;
+  font-weight: 800;
+}

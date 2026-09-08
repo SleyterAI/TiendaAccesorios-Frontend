@@ -1,1 +1,13 @@
-<p>payment-method works!</p>
+<div class="card section-card">
+  <h3 class="section-heading">Método de pago</h3>
+  <div class="form-grid">
+    <div class="input-group">
+      <label for="card">N° tarjeta:</label>
+      <input id="card" type="text" [(ngModel)]="cardNumber" placeholder="..." />
+    </div>
+    <div class="input-group">
+      <label for="cvv">CVV:</label>
+      <input id="cvv" type="password" [(ngModel)]="cvv" placeholder="..." />
+    </div>
+  </div>
+</div>

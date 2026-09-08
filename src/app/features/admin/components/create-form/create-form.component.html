@@ -1,0 +1,205 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>Crear producto</h2>
+
+    <form
+      [formGroup]="productoForm"
+      (ngSubmit)="guardarProducto()">
+      <!-- NOMBRE -->
+      <div class="form-group">
+        <label for="nombre">
+          Nombre
+        </label>
+
+        <input id="nombre"
+        type="text"
+        formControlName="nombre"
+        placeholder="Nombre del producto">
+
+        @if (
+        productoForm.controls.nombre.touched &&
+        productoForm.controls.nombre.invalid
+        ) {
+
+        <small class="error-text">
+          El nombre es obligatorio y debe tener
+          al menos 3 caracteres.
+        </small>
+        }
+      </div>
+
+
+      <!-- DESCRIPCIÓN -->
+      <div class="form-group">
+        <label for="descripcion">
+          Descripción
+        </label>
+
+        <textarea id="descripcion"
+        rows="4"
+        formControlName="descripcion"
+        placeholder="Descripción del producto"></textarea>
+
+        @if (
+        productoForm.controls.descripcion.touched &&
+        productoForm.controls.descripcion.invalid
+        ) {
+
+        <small class="error-text">
+          La descripción es obligatoria y debe tener
+          al menos 10 caracteres.
+        </small>
+
+        }
+      </div>
+
+
+      <!-- PRECIO -->
+      <div class="form-group">
+        <label for="precio">
+          Precio
+        </label>
+
+        <input id="precio"
+        type="number"
+        step="0.01"
+        formControlName="precio"
+        placeholder="Precio disponible">
+
+        @if (
+        productoForm.controls.precio.touched &&
+        productoForm.controls.precio.invalid
+        ) {
+
+        <small class="error-text">
+          El precio debe ser mayor a 0.
+        </small>
+        }
+      </div>
+
+
+      <!-- STOCK -->
+      <div class="form-group">
+        <label for="stock">
+          Stock
+        </label>
+
+        <input id="stock"
+        type="number"
+        formControlName="stock"
+        placeholder="Cantidad disponible">
+
+        @if (
+        productoForm.controls.stock.touched &&
+        productoForm.controls.stock.invalid
+        ) {
+
+        <small class="error-text">
+          El stock debe ser mayor a 0.
+        </small>
+        }
+      </div>
+
+
+      <!-- URL IMAGEN -->
+      <div class="form-group">
+        <label for="imageUrl">
+          URL de imagen
+        </label>
+
+        <input id="imageUrl"
+        type="url"
+        formControlName="imageUrl"
+        placeholder="https://ejemplo.com/imagen.jpg">
+        @if (
+        productoForm.controls.imageUrl.touched &&
+        productoForm.controls.imageUrl.invalid
+        ) {
+
+        <small class="error-text">
+          Url de imagen obligatoria.
+        </small>
+        }
+      </div>
+
+
+      <!-- CATEGORÍA -->
+
+      <div class="form-group">
+        <label for="categoriaId">
+          ID de categoría
+        </label>
+
+        <select
+          formControlName="categoriaId"
+          id="categoria">
+
+          <option value="" disabled>
+            Todas las categorías
+          </option>
+
+          @for (categoria of categorias; track categoria.id) {
+          <option [value]="categoria.id">
+            {{ categoria.name }}
+          </option>
+          }
+        </select>
+
+        @if (
+        productoForm.controls.categoriaId.touched &&
+        productoForm.controls.categoriaId.invalid
+        ) {
+
+        <small class="error-text">
+          Id de categoria obligatoria.
+        </small>
+        }
+      </div>
+
+
+      <!-- ACTIVO -->
+      <div class="checkbox-group">
+        <input id="activo"
+        type="checkbox"
+        formControlName="activo">
+
+        <label for="activo">
+          Mostrar producto en catalogo
+        </label>
+      </div>
+
+      <!-- BOTÓN -->
+      <div class="buttons">
+        <button type="submit"
+          class="crearProducto"
+          [disabled]="cargando">
+          @if (cargando) {
+            Guardando...
+          } @else {
+            Crear producto
+          }
+        </button>
+
+        <button
+          type="button"
+          class="cancelar"
+          routerLink="/admin/product">
+            Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+@if (showToast()) {
+  <app-toast
+    title="¡Producto agregado!"
+    message="El producto se agrego correctamente.">
+  </app-toast>
+}
+
+@if (error) {
+  <div class="error-message">
+    {{ error }}
+  </div>
+}

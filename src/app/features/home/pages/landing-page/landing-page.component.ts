@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from "@angular/router";
 import { HeaderComponent } from '../../components/header/header.component';
-import { ProductCardComponent } from '../../components/product/product-card/product-card.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { IntroductionComponent } from "../../components/header/introduction/introduction.component";
 import { CategoriesComponent } from '../../components/body/categories.component';

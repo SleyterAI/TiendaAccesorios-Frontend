@@ -1,0 +1,44 @@
+:host {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #07111f;
+  color: #dce3ed;
+}
+
+button {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin: 20px 20px 0 20px;
+  display: inline-block;
+  width: auto;
+}
+
+button:hover {
+  background: rgba(0, 229, 255, 0.1);
+  border-color: rgba(0, 229, 255, 0.3);
+  color: #00e5ff;
+  transform: translateY(-1px);
+}
+
+router-outlet + * {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  button {
+    display: block;
+    width: calc(100% - 32px);
+    margin: 16px 16px 0 16px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,210 @@
+<section class="update-container">
+
+  <h1>Actualizar producto</h1>
+
+  @if (cargando) {
+    <p>Cargando producto...</p>
+  }
+  @if (error) {
+    <p class="error">
+      {{ error }}
+    </p>
+  }
+<!--(ngSubmit)="actualizarProducto()"-->
+  @if (!cargando) {
+    <form
+      [formGroup]="formulario"
+
+    >
+
+      <!-- NOMBRE -->
+      <div class="form-group">
+        <label for="nombre">
+          Nombre
+        </label>
+
+        <input
+          id="nombre"
+          type="text"
+          formControlName="nombre"
+        />
+
+        @if (formulario.controls.nombre.touched &&
+          formulario.controls.nombre.invalid) {
+          <small class="error-text">
+            El nombre es obligatorio.
+          </small>
+        }
+      </div>
+
+
+      <!-- DESCRIPCIÓN -->
+      <div class="form-group">
+        <label for="descripcion">
+          Descripción
+        </label>
+
+        <textarea
+          id="descripcion"
+          formControlName="descripcion"
+          rows="4"
+        ></textarea>
+        @if (
+        formulario.controls.descripcion.touched &&
+        formulario.controls.descripcion.invalid
+        ) {
+        <small class="error-text">
+          Se necesita 10 caracteres como minimo.
+        </small>
+        }
+      </div>
+
+
+      <!-- PRECIO -->
+      <div class="form-group">
+        <label for="precio">
+          Precio
+        </label>
+
+        <input
+          id="precio"
+          type="number"
+          formControlName="precio"
+        />
+        @if (
+        formulario.controls.precio.touched &&
+        formulario.controls.precio.invalid
+        ) {
+        <small class="error-text">
+          Es necesario agregar precio.
+        </small>
+        }
+      </div>
+
+
+      <!-- STOCK -->
+      <div class="form-group">
+        <label for="stock">
+          Stock
+        </label>
+
+        <input
+          id="stock"
+          type="number"
+          formControlName="stock"
+        />
+        @if (
+        formulario.controls.stock.touched &&
+        formulario.controls.stock.invalid
+        ) {
+        <small class="error-text">
+          Se necesita agregar stock.
+        </small>
+        }
+      </div>
+
+
+      <!-- IMAGEN -->
+      <div class="form-group">
+        <label for="imageUrl">
+          URL de imagen
+        </label>
+
+        <input
+          id="imageUrl"
+          type="text"
+          formControlName="imageUrl"
+        />
+        @if (
+        formulario.controls.imageUrl.touched &&
+        formulario.controls.imageUrl.invalid
+        ) {
+        <small class="error-text">
+          Se necesita agregar un link de imagen referencial.
+        </small>
+        }
+      </div>
+
+
+      <!-- CATEGORÍA -->
+      <div class="form-group">
+        <label for="categoria">
+          Categoría
+        </label>
+
+        <input
+          id="categoria"
+          type="number"
+          formControlName="categoriaId"
+        />
+        @if (
+        formulario.controls.categoriaId.touched &&
+        formulario.controls.categoriaId.invalid
+        ) {
+        <small class="error-text">
+          Se necesita seleccionar una categoria select.
+        </small>
+        }
+        <!--<select formControlName="categoriaId"></select>-->
+      </div>
+
+
+      <!-- ACTIVO -->
+      <div class="form-group checkbox">
+        <label>
+          <input
+            type="checkbox"
+            formControlName="activo"
+          />
+          Producto activo
+        </label>
+      </div>
+
+
+      <!-- BOTÓN -->
+      <button
+        type="submit"
+        [disabled]="guardando"
+      >
+
+        @if (guardando) {
+          Guardando...
+        } @else {
+          Actualizar producto
+        }
+      </button>
+
+      <button
+          type="cancelar"
+          class="button"
+          routerLink="/admin/product">
+            Cancelar
+        </button>
+    </form>
+  }
+</section>
+
+@if (mostrarExito) {
+  <div class="success-overlay">
+
+    <div class="success-popup">
+
+      <div class="check-circle">
+        ✓
+      </div>
+
+      <h3>¡Producto actualizado!</h3>
+
+      <p>El producto se actualizo correctamente.</p>
+
+    </div>
+
+  </div>
+}
+
+@if (error) {
+  <div class="error-message">
+    {{ error }}
+  </div>
+}
+

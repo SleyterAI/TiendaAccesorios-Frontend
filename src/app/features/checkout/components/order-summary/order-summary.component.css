@@ -1,0 +1,89 @@
+/* Tarjeta de Resumen */
+.summary-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  position: sticky;
+  top: 100px;
+}
+
+.summary-title {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #9ba7b8;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.summary-row strong {
+  color: #fff;
+}
+
+.total-row {
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+.summary-total {
+  color: #00e5ff !important;
+  font-size: 1.25rem !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.summary-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 16px 0;
+}
+
+.btn-checkout {
+  width: 100%;
+  background: linear-gradient(135deg, #00e5ff, #4f7cff);
+  color: #07111f;
+  border: none;
+  font-weight: 700;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+
+.btn-checkout:hover {
+  opacity: 0.9;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.empty-cart {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 50px;
+  text-align: center;
+  color: #9ba7b8;
+}
+
+.empty-cart h3 {
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 992px) {
+  .checkout-grid {
+    grid-template-columns: 1fr;
+  }
+  .summary-card {
+    position: static;
+  }
+}

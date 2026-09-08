@@ -1,0 +1,24 @@
+.icon-button {
+  border: 0;
+  background: transparent;
+  color: #dce3ed;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  transition: background 0.25s ease;
+}
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

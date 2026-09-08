@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<section id="productos">
+  <h2><strong>Nuestros productos</strong></h2>
+
+  <div class="category-filter">
+    <label for="categoria">
+      Filtrar por categoría:
+    </label>
+
+    <select
+      id="categoria"
+      [value]="categoriaSeleccionada()"
+      (change)="cambiarCategoria($event)"
+      [disabled]="categoriasResource.isLoading()">
+
+      <option value="">
+        Todas las categorías
+      </option>
+
+      @if (categoriasResource.value(); as categorias) {
+        @for (categoria of categorias; track categoria.id) {
+          <option [value]="categoria.name">
+            {{ categoria.name }}
+          </option>
+        }
+      }
+    </select>
+  </div>
+
+  @if (productResource.isLoading()) {
+    <p class="mensaje">Cargando productos...</p>
+  }
+
+  @if (productResource.error()) {
+    <p class="mensaje error">No se pudieron cargar los productos</p>
+  }
+
+  @if (productosResource.value(); as products) {
+    @if (products.length > 0) {
+      <div class="products-container">
+        @for (product of products; track product.id) {
+          <app-product-card [product]="product"/>
+        }
+      </div>
+    } @else {
+      <p class="mensaje">No hay productos disponibles.</p>
+    }
+  }
+
+</section>
+
+<app-footer></app-footer>
+

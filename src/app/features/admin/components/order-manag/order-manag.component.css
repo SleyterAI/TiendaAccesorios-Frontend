@@ -1,0 +1,370 @@
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+
+h1 {
+  margin-left: 20px;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  color: #dce3ed;
+}
+
+.table-container > h2 {
+  margin-bottom: 25px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MENSAJES
+   ========================================= */
+
+.mensaje {
+  padding: 15px 20px;
+  border-radius: 12px;
+  background-color: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9ba7b8;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 15px;
+}
+
+.mensaje.error {
+  background-color: rgba(255, 92, 92, 0.05);
+  color: #ff5c5c;
+  border: 1px solid rgba(255, 92, 92, 0.2);
+}
+
+
+/* =========================================
+   TARJETA DEL PEDIDO
+   ========================================= */
+
+.pedido-card {
+  background-color: #131b2e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  margin-bottom: 30px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pedido-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================
+   CABECERA DEL PEDIDO
+   ========================================= */
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pedido-header h3 {
+  margin: 0 0 5px 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.pedido-header p {
+  margin: 0;
+  color: #9ba7b8;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   ESTADO
+   ========================================= */
+
+.pedido-header > strong {
+  background-color: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+
+/* =========================================
+   INFORMACIÓN DEL PEDIDO
+   ========================================= */
+
+.pedido-info {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.pedido-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pedido-info span {
+  color: #9ba7b8;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.pedido-info strong {
+  color: #dce3ed;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   TOTAL
+   ========================================= */
+
+.pedido-info div:last-child strong {
+  color: #00e5ff;
+  font-size: 18px;
+}
+
+
+/* =========================================
+   TÍTULO DETALLES
+   ========================================= */
+
+.pedido-card h4 {
+  margin: 10px 0 15px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   TABLA DE DETALLES
+   ========================================= */
+
+.pedido-card table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: #0d1322;
+}
+
+
+/* CABECERA */
+
+.pedido-card thead {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.pedido-card th {
+  padding: 13px 15px;
+  text-align: left;
+  color: #9ba7b8;
+  font-size: 13px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* CELDAS */
+
+.pedido-card td {
+  padding: 13px 15px;
+  color: #dce3ed;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+/* ÚLTIMA FILA */
+
+.pedido-card tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* HOVER */
+
+.pedido-card tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+
+/* =========================================
+   PRECIO
+   ========================================= */
+
+.pedido-card td:nth-child(4),
+.pedido-card td:nth-child(5) {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   CANTIDAD
+   ========================================= */
+
+.pedido-card td:nth-child(3) {
+  text-align: center;
+}
+
+
+/* =========================================
+   RESPONSIVE - TABLET
+   ========================================= */
+
+@media (max-width: 900px) {
+
+  .pedido-info {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================
+   RESPONSIVE - MÓVIL
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .table-container {
+    padding: 20px 12px;
+  }
+
+  .table-container > h2 {
+    font-size: 22px;
+  }
+
+  .pedido-card {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .pedido-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pedido-header h3 {
+    font-size: 18px;
+  }
+
+  .pedido-info {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .pedido-card {
+    overflow-x: auto;
+  }
+
+  .pedido-card table {
+    min-width: 650px;
+  }
+
+}
+
+/* =========================================
+   SELECT DE ESTADO
+   ========================================= */
+
+.pedido-header select {
+  border: none;
+  outline: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: auto;
+  transition: all 0.2s ease;
+  background-color: #0d1322;
+  color: #dce3ed;
+}
+
+.pedido-header select option {
+  background-color: #111827;
+  color: #fff;
+}
+
+
+/* =========================================
+   PENDIENTE (Rojo sutil/Advertencia)
+   ========================================= */
+
+.estado-pendiente {
+  background-color: rgba(255, 179, 0, 0.1);
+  color: #ffb300;
+  border: 1px solid rgba(255, 179, 0, 0.3) !important;
+}
+
+
+/* =========================================
+   EN PREPARACIÓN (Azul/Cian corporativo)
+   ========================================= */
+
+.estado-preparacion {
+  background-color: rgba(79, 124, 255, 0.1);
+  color: #4f7cff;
+  border: 1px solid rgba(79, 124, 255, 0.3) !important;
+}
+
+
+/* =========================================
+   ENTREGADO (Verde Neón/Cian NEXORA)
+   ========================================= */
+
+.estado-entregado {
+  background-color: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+}
+
+
+/* =========================================
+   HOVER
+   ========================================= */
+
+.pedido-header select:hover {
+  filter: brightness(1.15);
+}
+
+
+/* =========================================
+   FOCUS
+   ========================================= */
+
+.pedido-header select:focus {
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.2);
+}

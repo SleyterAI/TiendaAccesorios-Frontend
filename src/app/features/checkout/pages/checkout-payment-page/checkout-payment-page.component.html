@@ -1,1 +1,18 @@
-<p>checkout-payment-page works!</p>
+<div class="page">
+  <app-header></app-header>
+
+<section class="checkout-wrapper">
+  <div class="checkout-left-column">
+    <app-checkout-product></app-checkout-product>
+
+    <button (click)="continuar()"
+    >Finalizar compra</button>
+
+    <app-customer-info></app-customer-info>
+    <app-payment-method></app-payment-method>
+  </div>
+
+</section>
+
+  <app-footer></app-footer>
+</div>

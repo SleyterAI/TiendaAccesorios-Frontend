@@ -1,95 +1,112 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent }
-from './features/home/pages/landing-page/landing-page.component';
-import { ProductsDetailPageComponent }
-from './features/home/pages/products-detail-page/products-detail-page.component';
-import { CheckoutSummaryPageComponent }
-from './features/checkout/pages/checkout-summary-page/checkout-summary-page.component';
-import { CheckoutPaymentPageComponent }
-from './features/checkout/pages/checkout-payment-page/checkout-payment-page.component';
-import { CheckoutPageComponent }
-from './features/checkout/pages/checkout-page/checkout-page.component';
-import { AdminPageComponent }
-from './features/admin/pages/admin-page/admin-page.component';
-import { RegisterPageComponent }
-from './features/auth/pages/register-page/register-page.component';
-import { LoginPageComponent }
-from './features/auth/pages/login-page/login-page.component';
+  from './features/home/pages/landing-page/landing-page.component';
+import { ProductsPageComponent } from './features/product/pages/products-page/products-page.component';
+import { ProductDetailPageComponent } from './features/product/pages/product-detail-page/product-detail-page.component';
+import { CheckoutPageComponent } from './features/checkout/pages/checkout-page/checkout-page.component';
+import { CheckoutSummaryPageComponent } from './features/checkout/pages/checkout-summary-page/checkout-summary-page.component';
+import { CheckoutPaymentPageComponent } from './features/checkout/pages/checkout-payment-page/checkout-payment-page.component';
+import { RegisterPageComponent } from './features/auth/pages/register-page/register-page.component';
+import { LoginPageComponent } from './features/auth/pages/login-page/login-page.component';
+import { MessageOrderPageComponent } from './features/checkout/pages/message-order/message-order-page.component';
+import { AdminPageComponent } from './features/admin/pages/admin-page/admin-page.component';
+import { OrderManagComponent } from './features/admin/components/order-manag/order-manag.component';
+import { ProductManagComponent } from './features/admin/components/product-manag/product-manag.component';
+import { CreateFormComponent } from './features/admin/components/create-form/create-form.component';
+import { UpdateFormComponent } from './features/admin/components/update-form/update-form.component';
+import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
+import { guestGuard } from './core/guards/guest.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: LandingPageComponent,
   },
-  /*
+
   {
-    path: 'productos/:id',
-    component: ProductsDetailPageComponent,
+    path: 'products',
+    component: ProductsPageComponent,
   },
+
+  {
+    path: 'products/:id',
+    component: ProductDetailPageComponent,
+  },
+
   {
     path: 'checkout',
     component: CheckoutPageComponent,
-    //canActivate: [authGuard],
-    children: [
-      {
-        path: 'checkout-summary',
-        component: CheckoutSummaryPageComponent
-      },
-      {
-        path: 'checkout-payment',
-        component:CheckoutPaymentPageComponent
-      }
-    ]
+    canActivate: [authGuard],
   },
+  {
+    path: 'checkout/payment',
+    component: CheckoutPaymentPageComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'checkout/summary',
+    component: CheckoutSummaryPageComponent
+  },
+  {
+    path: 'messageorderpage',
+    component: MessageOrderPageComponent
+  },
+  /*canActivate: [authGuard],*/
+  /*
+
   {
     //path: 'pedido-confirmacion-page',
     //component: PedidoConfirmacionPageComponent,
     //canActivate: [authGuard],
-  },
+  },*/
   {
-    path: 'admin-page',
+    path: 'admin',
     component: AdminPageComponent,
-    //canActivate: [adminGuard],
+    canActivate: [adminGuard],
     children: [
       {
-        path: 'products-admin-page',
+        path: 'product',
         children: [
           {
             path: '',
-            //component: ProductsAdminPageComponent
+            component: ProductManagComponent
           },
           {
-            path: 'createProducto-page',
-            //component: CreateProductoPageComponent
+            path: 'create',
+            component: CreateFormComponent
           },
           {
-            path: 'update-form-page/:id',
-            //component: UpdateFormPageComponent
+            path: 'update/:id',
+            component: UpdateFormComponent
           }
         ]
       },
       {
-        path: 'pedidos-admin-page',
-        //component: PedidosAdminPageComponent,
-        //canActivate: [adminGuard],
+        path: 'order',
+        component: OrderManagComponent,
+        canActivate: [adminGuard],
       },
+      /*
       {
-        path: 'users-admin-page',
+        path: 'users',
         //component: UsersAdminPageComponent,
         //canActivate: [adminGuard],
-      }
+      }*/
     ]
   },
+
   {
     path: 'register',
-    //canActivate: [guestGuard],
+    canActivate: [guestGuard],
     component: RegisterPageComponent,
   },
   {
     path: 'login',
-    //canActivate: [guestGuard],
+    canActivate: [guestGuard],
     component: LoginPageComponent,
   },
+  /*
   {
     //path: 'me',
     //canActivate: [authGuard],

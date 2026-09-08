@@ -1,1 +1,29 @@
-<p>order-summary works!</p>
+<!-- Resumen de la compra -->
+<div class="summary-box">
+  <div class="summary-card">
+    <h3 class="summary-title">Resumen de la compra</h3>
+
+    <div class="summary-row">
+      <span>Productos ({{ cartCount() }})</span>
+      <strong>S/ {{ cart()!.totalPrice | number:'1.2-2' }}</strong>
+    </div>
+
+    <div class="summary-divider"></div>
+
+    <div class="summary-row">
+      <span>Descuentos</span>
+      <strong>S/ 0.00</strong>
+    </div>
+
+    <div class="summary-divider"></div>
+
+    <div class="summary-row total-row">
+      <span class="fw-bold text-white">Total:</span>
+      <strong class="summary-total">S/ {{ cart()!.totalPrice | number:'1.2-2' }}</strong>
+    </div>
+
+    <button class="btn-checkout" routerLink="/checkout/payment">
+      Continuar compra
+    </button>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<!-- Mobile menu -->
+<button class="menu-button" (click)="toggleMenu()" aria-label="Abrir menú" >
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+<!-- Mobile Navigation -->
+@if (menuOpen()) {
+<nav class="mobile-navigation">
+  <a href="" (click)="closeMenu()">Inicio</a>
+  <a href="/products" (click)="closeMenu()">Productos</a>
+  <a href="/products" (click)="closeMenu()">Categorías</a>
+  <a href="/products" (click)="closeMenu()">Ofertas</a>
+  @if(role()==='ROLE_ADMIN'){
+    <a href="/admin" (click)="closeMenu()">ADMIN</a>
+  }
+</nav>
+}

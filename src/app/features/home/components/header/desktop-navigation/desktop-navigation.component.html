@@ -1,0 +1,32 @@
+<!-- Desktop Navigation -->
+<nav class="navigation">
+  <a
+    class="nav-link"
+    routerLink=""
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+  <a
+    class="nav-link"
+    routerLink="/products"
+    routerLinkActive="active">Productos</a>
+  <a
+    href="#categories"
+    class="nav-link"
+    routerLink="/categories"
+    routerLinkActive="active">Categorías</a>
+  <a
+    href="#offers"
+    class="nav-link"
+    routerLink="/offers"
+    routerLinkActive="active">Ofertas</a>
+
+  @if(role()==='ROLE_ADMIN'){
+    <a
+    href="#offers"
+    class="nav-link"
+    routerLink="/admin"
+    routerLinkActive="active">
+    ADMIN
+  </a>
+  }
+</nav>
