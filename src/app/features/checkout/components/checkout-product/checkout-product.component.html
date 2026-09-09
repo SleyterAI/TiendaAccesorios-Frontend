@@ -1,96 +1,103 @@
 <section class="checkout-container">
   <h2 class="section-title">Carro ({{ cartCount() }} productos)</h2>
 
-  @if (cart() === null) {
-    <div class="empty-cart">
-      <h3>Tu carrito está vacío</h3>
-      <p>Agrega algunos productos para comenzar.</p>
-    </div>
+  @if (cartResource.isLoading()) {
+
+  <div class="empty-cart">
+    <p>Cargando carrito...</p>
+  </div>
+
   } @else {
-    <div class="checkout-grid">
+  @if(cartResource.value(); as cart){
+  @if (cart === null || cart.items.length === 0) {
 
-      <!-- Lista de productos -->
-      <div class="products-list">
-        @for (item of cart()!.items; track item.id) {
-          <div class="product-card-item">
+  <div class="empty-cart">
+    <h3>Tu carrito está vacío</h3>
+    <p>Agrega algunos productos para comenzar.</p>
+  </div>
 
-            <!-- Imagen -->
-            <div class="product-img-box">
-              <img [src]="item.imageUrl" [alt]="item.productName">
-            </div>
+  }@else {
 
-            <!-- Descripción -->
-            <div class="product-info">
-              <h4 class="product-name">
-                {{ item.productName }}</h4>
-              <span class="product-unit-price">
-                S/ {{ item.price | number:'1.2-2' }}</span>
-            </div>
+  <div class="checkout-grid">
+    <!-- Lista de productos -->
+    <div class="products-list">
+      @for (item of cart.items; track item.id) {
+      <div class="product-card-item">
 
-            <!-- Subtotal -->
-            <div class="product-subtotal-box">
-              <span class="subtotal-val">
-                S/ {{ item.subTotal | number:'1.2-2' }}</span>
-            </div>
+        <!-- Imagen -->
+        <div class="product-img-box">
+          <img [src]="item.imageUrl" [alt]="item.productName">
+        </div>
 
-            <!-- Cantidad y límite [disabled]="item.quantity <= 1"-->
-            <div class="product-qty-box">
-              <div class="quantity-control">
-                <button class="qty-btn"
-                  (click)="decreaseQuantity(item.productId)"
-                  >-</button>
+        <!-- Descripción -->
+        <div class="product-info">
+          <h4 class="product-name">
+            {{ item.productName }}</h4>
+          <span class="product-unit-price">
+            S/ {{ item.price | number:'1.2-2' }}</span>
+        </div>
 
-                <span class="qty-value">{{ item.quantity }}</span>
+        <!-- Subtotal -->
+        <div class="product-subtotal-box">
+          <span class="subtotal-val">
+            S/ {{ item.subTotal | number:'1.2-2' }}</span>
+        </div>
 
-                <button class="qty-btn"
-                  (click)="increaseQuantity(item.productId)"
-                  [disabled]="item.quantity === 4">+</button>
-              </div>
-              <small class="qty-limit">Max 4 unidades</small>
-            </div>
+        <!-- Cantidad y límite [disabled]="item.quantity <= 1"-->
+        <div class="product-qty-box">
+          <div class="quantity-control">
+            <button class="qty-btn" (click)="decreaseQuantity(item.productId)">-</button>
 
-            <!-- Eliminar -->
-            <div class="product-action-box">
-              <button class="btn-delete"
-                (click)="removeItem(item.productId)" aria-label="Eliminar">
-                X
-              </button>
-            </div>
+            <span class="qty-value">{{ item.quantity }}</span>
 
+            <button class="qty-btn" (click)="increaseQuantity(item.productId)"
+              [disabled]="item.quantity === 4">+</button>
           </div>
-        }
-      </div>
+          <small class="qty-limit">Max 4 unidades</small>
+        </div>
 
-      <!-- Resumen de la compra -->
-      <div class="summary-box">
-        <div class="summary-card">
-          <h3 class="summary-title">Resumen de la compra</h3>
-
-          <div class="summary-row">
-            <span>Productos ({{ cartCount() }})</span>
-            <strong>S/ {{ cart()!.totalPrice | number:'1.2-2' }}</strong>
-          </div>
-
-          <div class="summary-divider"></div>
-
-          <div class="summary-row">
-            <span>Descuentos</span>
-            <strong>S/ 0.00</strong>
-          </div>
-
-          <div class="summary-divider"></div>
-
-          <div class="summary-row total-row">
-            <span class="fw-bold text-white">Total:</span>
-            <strong class="summary-total">S/ {{ cart()!.totalPrice | number:'1.2-2' }}</strong>
-          </div>
-
-          <button class="btn-checkout" routerLink="/checkout/payment">
-            Continuar compra
+        <!-- Eliminar -->
+        <div class="product-action-box">
+          <button class="btn-delete" (click)="removeItem(item.productId)" aria-label="Eliminar">
+            X
           </button>
         </div>
-      </div>
 
+      </div>
+      }
     </div>
+
+    <!-- Resumen de la compra -->
+    <div class="summary-box">
+      <div class="summary-card">
+        <h3 class="summary-title">Resumen de la compra</h3>
+
+        <div class="summary-row">
+          <span>Productos ({{ cartCount() }})</span>
+          <strong>S/ {{ cart.totalPrice | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row">
+          <span>Descuentos</span>
+          <strong>S/ 0.00</strong>
+        </div>
+
+        <div class="summary-divider"></div>
+
+        <div class="summary-row total-row">
+          <span class="fw-bold text-white">Total:</span>
+          <strong class="summary-total">S/ {{ cart.totalPrice | number:'1.2-2' }}</strong>
+        </div>
+
+        <button class="btn-checkout" routerLink="/checkout/payment">
+          Continuar compra
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+  }
   }
 </section>

@@ -8,15 +8,16 @@
     Agregar nuevo producto
   </button>
 
-  @if (cargando) {
+  @if (productoResource.isLoading()) {
   <p class="mensaje">Cargando productos...</p>
   }
 
-  @if (error) {
-  <p class="mensaje error">{{ error }}</p>
+  @if (error()) {
+  <p class="mensaje error">{{ error() }}</p>
   }
 
-  @if (!cargando && !error && productos.length > 0) {
+  @if (productoResource.value(); as productos) {
+    @if (productos.length > 0) {
   <div class="products-container">
 
     <div class="desktop-view">
@@ -32,7 +33,6 @@
             <th>Categoria Nombre</th>
             <th>Habilitar</th>
             <th>Actualizar</th>
-
           </tr>
         </thead>
 
@@ -65,11 +65,9 @@
 
     <div class="mobile-view">
       @for (producto of productos; track producto.id) {
-
       <div class="product-card">
-
         <div class="product-img">
-          <img src={{producto.imageUrl}}>
+          <img src={{producto.imageUrl}} [alt]="producto.name">
         </div>
 
         <div class="product-info">
@@ -86,7 +84,6 @@
 
             <span>Categoria</span>
             <strong>{{ producto.categoryName }}</strong>
-
           </div>
 
           <div class="buttons">
@@ -103,39 +100,28 @@
                 routerLinkActive="active">Actualizar</button>
             </div>
           </div>
-
         </div>
       </div>
-
-
       }
     </div>
   </div>
+  }@else {
+      <p class="mensaje">No hay productos disponibles.</p>
+    }
   }
-
-  @if (!cargando && !error && productos.length === 0) {
-  <p class="mensaje">No hay productos disponibles.</p>
-  }
-
 </div>
 
-@if (mostrarExito) {
-<div class="success-overlay">
-  <div class="success-popup">
-    <div class="check-circle">
-      ✓
-    </div>
-
-    <h3>{{ tituloPopup }}</h3>
-    <p>{{ mensajePopup }}</p>
-  </div>
-</div>
+@if (mostrarExito()) {
+<app-toast
+  title="{{tituloPopup()}}"
+  message="{{mensajePopup()}}">
+</app-toast>
 
 }
 
-@if (error) {
+@if (error()) {
 <div class="error-message">
-  {{ error }}
+  {{ error() }}
 </div>
 }
 

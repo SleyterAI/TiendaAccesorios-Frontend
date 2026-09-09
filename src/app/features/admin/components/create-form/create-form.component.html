@@ -12,9 +12,9 @@
         </label>
 
         <input id="nombre"
-        type="text"
-        formControlName="nombre"
-        placeholder="Nombre del producto">
+          type="text"
+          formControlName="nombre"
+          placeholder="Nombre del producto">
 
         @if (
         productoForm.controls.nombre.touched &&
@@ -23,7 +23,7 @@
 
         <small class="error-text">
           El nombre es obligatorio y debe tener
-          al menos 3 caracteres.
+          al menos 5 caracteres.
         </small>
         }
       </div>
@@ -138,7 +138,7 @@
             Todas las categorías
           </option>
 
-          @for (categoria of categorias; track categoria.id) {
+          @for (categoria of categoryResource.value(); track categoria.id) {
           <option [value]="categoria.id">
             {{ categoria.name }}
           </option>
@@ -172,8 +172,8 @@
       <div class="buttons">
         <button type="submit"
           class="crearProducto"
-          [disabled]="cargando">
-          @if (cargando) {
+          [disabled]="cargando()">
+          @if (cargando()) {
             Guardando...
           } @else {
             Crear producto
@@ -198,8 +198,8 @@
   </app-toast>
 }
 
-@if (error) {
+@if (error()) {
   <div class="error-message">
-    {{ error }}
+    {{ error() }}
   </div>
 }

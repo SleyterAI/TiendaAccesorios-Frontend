@@ -3,86 +3,59 @@ import { HeaderComponent } from "../../../home/components/header/header.componen
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ProductService } from '../../../product/services/product.service';
 import { Product } from '../../../product/interfaces/product.interface';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
+import { ToastComponent } from "../../../../components/toast/toast.component";
 
 @Component({
   selector: 'app-product-manag',
   imports: [RouterLink,
-    RouterLinkActive,RouterOutlet],
+    RouterLinkActive, RouterOutlet, ToastComponent],
   templateUrl: './product-manag.component.html',
   styleUrl: './product-manag.component.css',
 })
 export class ProductManagComponent {
-  private productService = inject(ProductService);
-  productos: Product[] = [];
+  private readonly productService = inject(ProductService);
+
+  readonly productoResource = rxResource({
+    stream: () => this.productService.getAllProductAdmin().pipe(
+      map(data => [...data].reverse())
+    ),
+  });
 
   showToast = signal(false);
-  //producto = this.productoService.
-  cargando = false;
-  error = '';
-  mostrarExito = false
-  tituloPopup = '';
-  mensajePopup = '';
-
-  ngOnInit(): void {
-    this.getAllProducto();
-  }
-
-  getAllProducto(): void {
-    this.cargando = true;
-    this.error = '';
-
-    this.productService.getAllProductAdmin().subscribe({
-      next: (data) => {
-        this.productos = [...data].reverse();
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.error('Error al obtener productos:', err);
-        this.error = 'No se pudieron cargar los productos';
-        this.cargando = false;
-      }
-    });
-  }
+  error = signal('');
+  mostrarExito = signal(false);
+  tituloPopup = signal('');
+  mensajePopup = signal('');
 
   cambiarActivo(producto: Product): void {
-
     const nuevoEstado = !producto.visible;
 
-    this.productService.cambiarActivo(producto.id!, nuevoEstado).subscribe({
-      next: (productoActualizado) => {
-        /*console.log(
-          'Producto actualizado:',
-          productoActualizado
-        );*/
-        producto.visible = productoActualizado.visible;
+    this.productService
+    .updateProductVisible(producto.id!, nuevoEstado)
+    .subscribe({
+      next: () => {
+        producto.visible = nuevoEstado;
         // Mostrar popup
-        this.mostrarExito = true;
+        this.mostrarExito.set(true);
+        this.tituloPopup.set(
+          nuevoEstado ? '¡Producto activo!' : '¡Producto desactivado!'
+        );
 
-        if (productoActualizado.visible) {
-
-            this.tituloPopup = '¡Producto activo!';
-
-            this.mensajePopup =
-              'El producto se activó correctamente.';
-
-          } else {
-
-            this.tituloPopup = '¡Producto desactivado!';
-
-            this.mensajePopup =
-              'El producto se desactivó correctamente.';
-          }
-
+        this.mensajePopup.set(
+          nuevoEstado ? 'El producto se activó correctamente.'
+          : 'El producto se desactivó correctamente.'
+        );
         // Esperar 1.5 segundos y navegar
         setTimeout(() => {
-          this.mostrarExito = false;
+          this.mostrarExito.set(false);
         }, 1500);
       },
 
       error: (err) => {
         console.error('Error al actualizar estado:', err);
-        this.error =
-          'No se pudo actualizar el estado del producto';
+        this.error.set('No se pudo actualizar el estado del producto');
       }
     });
   }

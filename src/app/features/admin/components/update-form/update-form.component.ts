@@ -1,71 +1,58 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { ProductService } from '../../../product/services/product.service';
 import { ProductRequest } from '../../../product/interfaces/product.interface';
+import { CategoryService } from '../../../home/services/category.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { tap } from 'rxjs';
+import { ToastComponent } from "../../../../components/toast/toast.component";
 
 @Component({
   selector: 'app-update-form',
   templateUrl: './update-form.component.html',
   styleUrl: './update-form.component.css',
   imports: [
-    ReactiveFormsModule, RouterLink
-  ]
+    ReactiveFormsModule, RouterLink,
+    ToastComponent
+]
 })
-export class UpdateFormComponent implements OnInit {
+export class UpdateFormComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly productoService = inject(ProductService);
+  private readonly categoryService = inject(CategoryService);
 
-  private fb = inject(FormBuilder);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private productoService = inject(ProductService);
+  private readonly productoId = Number(this.route.snapshot.paramMap.get('id'));
 
-  productoId!: number;
-
-  cargando = false;
-  guardando = false;
-  mostrarExito = false;
-  error = '';
-  mensaje = '';
-
-  formulario = this.fb.nonNullable.group({
-    nombre: ['', Validators.required],
-    descripcion: ['', Validators.required],
-    precio: [0, [
-      Validators.required,
-      Validators.min(1)
-    ]],
-    stock: [0, [
-      Validators.required,
-      Validators.min(0)
-    ]],
-    imageUrl: ['', Validators.required],
-    activo: [true],
-    categoriaId: ['', Validators.required
-    ]
+  readonly categoriaResource = rxResource({
+    stream: () => this.categoryService.getAllCategory(),
   });
 
+  showToast = signal(false);
+  error = signal('');
 
-  ngOnInit(): void {
+  readonly formulario = this.fb.nonNullable.group({
+    nombre: ['', Validators.required],
+    descripcion: ['', Validators.required],
+    precio: [0, [Validators.required, Validators.min(1)]],
+    stock: [0, [Validators.required, Validators.min(0)]],
+    imageUrl: ['', Validators.required],
+    activo: [true],
+    categoriaId: [0, [Validators.required, Validators.min(1)]]
+  });
 
-    const id = this.route.snapshot.paramMap.get('id');
+  readonly productoResource = rxResource({
+    stream: () => {
+      if (!this.productoId) {
+        this.error.set('No se recibió el ID del producto');
+        throw new Error('ID no válido');
+      }
 
-    if (!id) {
-      this.error = 'No se recibió el ID del producto';
-      return;
-    }
-
-    this.productoId = Number(id);
-    this.getProducto();
-  }
-
-
-  getProducto(): void {
-    this.cargando = true;
-    this.error = '';
-
-    this.productoService.getProductById(this.productoId).subscribe({
-        next: (producto) => {
+      return this.productoService.getProductById(this.productoId).pipe(
+        tap(producto => {
           this.formulario.patchValue({
             nombre: producto.name,
             descripcion: producto.description,
@@ -73,34 +60,20 @@ export class UpdateFormComponent implements OnInit {
             stock: producto.stock,
             imageUrl: producto.imageUrl,
             activo: producto.visible,
-            categoriaId: producto.categoryName ?? 0
+            categoriaId: producto.category.id ?? 0
           });
+        })
+      );
+    }
+  });
 
-          this.cargando = false;
-        },
-
-        error: (err) => {
-          console.error(
-            'Error al obtener producto:',
-            err
-          );
-          this.error =
-            'No se pudo cargar el producto';
-          this.cargando = false;
-        }
-      });
-  }
-
-/*
   actualizarProducto(): void {
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
     }
 
-    this.guardando = true;
-    this.error = '';
-
+    this.error.set('');
     const formValue = this.formulario.getRawValue();
 
     const productoRequest: ProductRequest = {
@@ -110,34 +83,24 @@ export class UpdateFormComponent implements OnInit {
       stock: formValue.stock,
       imageUrl: formValue.imageUrl,
       visible: formValue.activo,
-      category: {id: formValue.categoriaId}
+      category: { id: formValue.categoriaId }
     };
 
-    this.productoService
-      .updateProducto(this.productoId, productoRequest).subscribe({
+    this.productoService.updateProducto(this.productoId, productoRequest)
+      .subscribe({
         next: () => {
-          this.mensaje = 'Producto actualizado correctamente';
-          this.guardando = false;
-
-          // Mostrar popup
-          this.mostrarExito = true;
-
-          // Esperar 1.5 segundos y navegar
+          this.showToast.set(true);
           setTimeout(() => {
-            this.mostrarExito = false;
-            this.router.navigate([
-              '/admin-page/products-admin-page']);
+            this.showToast.set(false);
+            this.router.navigate(['/admin/product']);
           }, 1500);
         },
 
         error: (err) => {
-          console.error(
-            'Error al actualizar producto:',err);
-          this.error =
-            'No se pudo actualizar el producto';
-          this.guardando = false;
+          console.error('Error al actualizar producto:', err);
+          this.error.set('No se pudo actualizar el producto');
         }
       });
-  }*/
+  }
 }
 

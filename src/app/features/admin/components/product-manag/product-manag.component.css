@@ -11,7 +11,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  background: #111827;
+  background: #243863;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
@@ -24,7 +24,7 @@ table {
 }
 
 thead {
-  background-color: #161f33;
+  background-color: #12203f;
   color: #fff;
 }
 

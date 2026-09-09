@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs';
 import { DecimalPipe } from '@angular/common';
 import { HeaderComponent } from '../../../home/components/header/header.component';
 import { FooterComponent } from '../../../home/components/footer/footer.component';
+import { Product, Producto } from '../../interfaces/product.interface';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -28,4 +29,10 @@ export class ProductDetailPageComponent {
     ),
     { initialValue: null }
   );
+
+  addToCart(product: Producto): void {
+    this.cartService.addItem(product.id).subscribe();
+  }
+
+  cartCount = this.cartService.cartCount;
 }

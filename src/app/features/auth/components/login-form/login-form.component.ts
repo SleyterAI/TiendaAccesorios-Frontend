@@ -17,13 +17,8 @@ export class LoginFormComponent {
   readonly isSubmitting = signal(false);
 
   readonly loginForm = this.fb.nonNullable.group({
-    email: ['',
-      [ Validators.required,
-        Validators.email]],
-
-    password: ['',
-      [Validators.required,
-        Validators.minLength(8)]]
+    email: ['',[ Validators.required, Validators.email]],
+    password: ['',[Validators.required, Validators.minLength(8)]]
   });
 
   login(): void {
@@ -32,7 +27,6 @@ export class LoginFormComponent {
       return;
     }
     this.isSubmitting.set(true);
-
     const request = this.loginForm.getRawValue();
 
     this.authService.login(request).subscribe({
@@ -45,6 +39,5 @@ export class LoginFormComponent {
         this.isSubmitting.set(false);
       }
     });
-
   }
 }

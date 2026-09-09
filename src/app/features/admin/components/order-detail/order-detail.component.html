@@ -1,0 +1,77 @@
+<div class="order-detail-container">
+  <button class="btn-back" routerLink="/admin/order">← Volver a pedidos</button>
+
+  @if (orderResource.isLoading()) {
+  <p class="mensaje">Cargando detalles del pedido...</p>
+
+  }@else {
+  @if (orderResource.value(); as order) {
+  <div class="detail-card">
+
+    <!-- Cabecera Principal-->
+    <div class="detail-header">
+      <div>
+        <h2>Pedido #{{ order.order_id }}</h2>
+        <p class="order-date">Fecha: <strong>{{ order.order_date }}</strong></p>
+      </div>
+      <span class="status-badge" >
+        {{ order.order_status }}
+      </span>
+    </div>
+
+    <!-- Grid de Información General-->
+    <div class="info-grid">
+      <div class="info-group">
+        <span class="info-label">Cliente</span>
+        <span class="info-value">{{ order.user_name }}</span>
+        <span class="info-sub">{{ order.user_email }}</span>
+      </div>
+      <div class="info-group">
+        <span class="info-label">Celular</span>
+        <span class="info-value">{{ order.order_phoneNumber }}</span>
+      </div>
+      <div class="info-group">
+        <span class="info-label">Dirección de Entrega</span>
+        <span class="info-value">{{ order.order_address }}</span>
+      </div>
+      <div class="info-group">
+        <span class="info-label">Monto Total</span>
+        <span class="info-value total-highlight">S/ {{ order.order_total | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+@for (detail of order.orderDetailResponseDto; track detail.product_id) {
+    <!-- Sección de Producto / Ítem del Detalle-->
+    <h3 class="section-title">Producto Adquirido</h3>
+
+    <div class="product-item-card">
+      <div class="product-img-wrapper">
+        <img [src]="detail.product_imageUrl" [alt]="detail.product_name" class="product-img" />
+      </div>
+
+      <div class="product-details">
+        <div class="product-main-info">
+          <span class="category-tag">{{ detail.category_name }}</span>
+          <h4 class="product-name">{{ detail.product_name }}</h4>
+        </div>
+
+        <div class="product-metrics">
+          <div class="metric">
+            <span>Cantidad</span>
+            <strong>{{ detail.orderDetail_quantity }}</strong>
+          </div>
+          <div class="metric">
+            <span>Precio Unitario</span>
+            <strong>S/ {{ detail.orderDetail_unitPrice | number:'1.2-2' }}</strong>
+          </div>
+          <div class="metric">
+            <span>Subtotal</span>
+            <strong class="subtotal-text">S/ {{ detail.orderDetail_subTotal | number:'1.2-2' }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    </div>
+    }
+    }

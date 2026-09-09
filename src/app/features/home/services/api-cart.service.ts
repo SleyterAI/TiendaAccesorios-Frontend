@@ -24,6 +24,10 @@ export class ApiCartService {
     this._cartItems.set(cart.items);
   }
 
+  constructor(){
+    this.getCart().subscribe();
+  }
+
   /* METODOS CONSUMEN API */
   // Agregar 1 producto al cart si no hay crea uno nuevo
   addItem(productId: number): Observable<CartResponse> {

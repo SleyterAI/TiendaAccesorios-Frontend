@@ -17,6 +17,7 @@ import { UpdateFormComponent } from './features/admin/components/update-form/upd
 import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
 import { guestGuard } from './core/guards/guest.guard';
+import { OrderDetailComponent } from './features/admin/components/order-detail/order-detail.component';
 
 export const routes: Routes = [
   {
@@ -84,8 +85,18 @@ export const routes: Routes = [
       },
       {
         path: 'order',
-        component: OrderManagComponent,
-        canActivate: [adminGuard],
+        children: [
+          {
+            path: '',
+            component: OrderManagComponent,
+          },
+          {
+            path: 'detail/:id',
+            component: OrderDetailComponent
+          },
+        ]
+
+
       },
       /*
       {

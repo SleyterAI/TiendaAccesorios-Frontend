@@ -13,26 +13,18 @@ import { UserService } from '../../services/user.service';
 })
 
 export class RegisterFormComponent {
-
   private readonly fb = inject(FormBuilder);
   private readonly userService = inject(UserService);
-  private router = inject(Router);
-  readonly isSubmitting = signal(false);
+  private readonly router = inject(Router);
 
-  showToast = signal(false);
+  readonly isSubmitting = signal(false);
+  readonly showToast = signal(false);
+  readonly error = signal('');
 
   readonly registerForm = this.fb.nonNullable.group({
-    username: ['',
-      [Validators.required,
-        Validators.minLength(3)]],
-
-    email: ['',
-      [ Validators.required,
-        Validators.email]],
-
-    password: ['',
-      [Validators.required,
-        Validators.minLength(8)]]
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]]
   });
 
   createUsuario(): void {
@@ -41,23 +33,22 @@ export class RegisterFormComponent {
       return;
     }
     this.isSubmitting.set(true);
+    this.error.set('');
 
     const request = this.registerForm.getRawValue();
 
     this.userService.createUsuario(request).subscribe({
      next: () => {
-        this.showToast.set(true);
-
         this.isSubmitting.set(false);
+        this.showToast.set(true);
 
         setTimeout(() => {
           this.showToast.set(false);
-
           this.router.navigate(['']);
         }, 1500);
       },
       error: (err) => {
-        console.error(err);
+        this.error.set('No se pudo completar el registro');
         this.isSubmitting.set(false);
       }
     });

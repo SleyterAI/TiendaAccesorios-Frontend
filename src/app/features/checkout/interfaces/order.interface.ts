@@ -1,18 +1,4 @@
-import { /*OrderDetail,*/ OrderDetailResponse } from './order-detail.interface';
-/*
-export interface OrderDetailRequest {
-  productId: number;
-  quantity: number;
-}
-
-export interface Order {
-  id?:number;
-  userName:string;
-  phoneNumber:string;
-  address:string;
-  orderDetailRequest: OrderDetailRequest[];
-}*/
-
+import { OrderDetailResponseDto } from './order-detail.interface';
 
 //implemented
 export interface OrderRequest {
@@ -34,7 +20,7 @@ export interface OrderResponse {
   user_email: string;
 
   //order detail
-  orderDetailResponse: OrderDetailResponse[];
+  orderDetailResponseDto: OrderDetailResponseDto[];
 }
 
 export interface OrderSummaryResponse{

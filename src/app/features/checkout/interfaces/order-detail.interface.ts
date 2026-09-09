@@ -10,7 +10,7 @@ export interface OrderDetail {
 }*/
 
 //implemented
-export interface OrderDetailResponse{
+export interface OrderDetailResponseDto{
   //order detail
   orderDetail_quantity: number;
   orderDetail_unitPrice: number;

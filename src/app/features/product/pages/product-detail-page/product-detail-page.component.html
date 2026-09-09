@@ -1,5 +1,4 @@
 <app-header></app-header>
-
 @if (producto(); as producto) {
   <main class="product-detail">
     <div class="product-container">
@@ -21,7 +20,7 @@
         <section class="product-info">
 
           <span class="product-category">
-            {{ producto.categoryName }}
+            {{ producto.category.name }}
           </span>
 
           <h1 class="product-title">
@@ -64,7 +63,7 @@
               <button
                 type="button"
                 class="btn-add-cart"
-                >
+                (click)="addToCart(producto)">
                 <span class="cart-icon"
                 >
                 🛒</span>

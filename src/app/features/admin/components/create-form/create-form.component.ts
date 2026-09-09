@@ -6,9 +6,10 @@ import { ProductRequest } from "../../../product/interfaces/product.interface";
 import { CategoryService } from "../../../home/services/category.service";
 import { Category } from "../../../home/interfaces/category.interface";
 import { ToastComponent } from "../../../../components/toast/toast.component";
+import { rxResource } from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: 'createProducto-page',
+  selector: 'app-create-form',
   templateUrl: './create-form.component.html',
   styleUrl: './create-form.component.css',
   imports: [
@@ -18,83 +19,40 @@ import { ToastComponent } from "../../../../components/toast/toast.component";
 ],
 })
 export class CreateFormComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly productoService = inject(ProductService);
+  private readonly categoryService = inject(CategoryService);
 
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
+  readonly categoryResource = rxResource({
+    stream: () => this.categoryService.getAllCategory(),
+  });
 
-  private productoService = inject(ProductService);
-  private categoriaService = inject(CategoryService)
-
-  categorias: Category[] = [];
-
-  cargando = false;
-  cargandoCategorias = false;
-  mensaje = '';
-  error = '';
-  categoriaSeleccionada = '';
-  mostrarExito = false;
+  cargando = signal(false);
+  mensaje = signal('');
+  error = signal('');
   showToast = signal(false);
 
-  ngOnInit(): void {
-    this.getCategorias();
-  }
-
-  getCategorias(): void {
-    this.cargandoCategorias = true;
-
-    this.categoriaService.getAllCategory().subscribe({
-      next: (data) => {
-        this.categorias = data;
-        this.cargandoCategorias = false;
-      },
-      error: (err) => {
-        console.error('Error al obtener categorías:', err);
-        this.cargandoCategorias = false;
-      }
-    });
-  }
-
-
-
-  productoForm = this.fb.nonNullable.group({
-
-    nombre: ['',
-      [Validators.required,
-      Validators.minLength(5)]],
-
-    descripcion: ['',
-      [Validators.required,
-    Validators.minLength(10)]],
-
-    precio: ['',
-      [Validators.required,
-      Validators.min(1)]],
-
-    stock: ['',
-      [Validators.required,
-      Validators.min(1)]],
-
-    imageUrl: ['',
-      [Validators.required]],
-
+  readonly productoForm = this.fb.nonNullable.group({
+    nombre: ['', [Validators.required, Validators.minLength(5)]],
+    descripcion: ['', [Validators.required, Validators.minLength(10)]],
+    precio: ['', [Validators.required, Validators.min(1)]],
+    stock: ['', [Validators.required, Validators.min(1)]],
+    imageUrl: ['', [Validators.required]],
     activo: [true],
-
     categoriaId: ['', [Validators.required]]
-
   });
 
 
   guardarProducto(): void {
-
     if (this.productoForm.invalid) {
       this.productoForm.markAllAsTouched();
       return;
     }
 
-    this.cargando = true;
-    this.mensaje = '';
-    this.error = '';
-
+    this.cargando.set(true);
+    this.mensaje.set('');
+    this.error.set('');
     const formValue = this.productoForm.getRawValue();
 
     const producto: ProductRequest = {
@@ -109,40 +67,22 @@ export class CreateFormComponent {
       }
     };
 
-    //console.log('Producto que se enviará:', producto);
-
     this.productoService.createProducto(producto).subscribe({
       next: () => {
-        this.mensaje ='Producto creado correctamente';
-        this.cargando = false;
-
+        this.mensaje.set('Producto creado correctamente');
+        this.cargando.set(false);
         this.showToast.set(true);
 
         setTimeout(() => {
           this.showToast.set(false);
-          this.router.navigate([
-            '/admin-page/products-admin-page'
-          ]);
+          this.router.navigate(['/admin/product']);
         }, 1500);
-
-        this.productoForm.reset({
-          nombre: '',
-          descripcion: '',
-          precio: '',
-          stock: '',
-          imageUrl: '',
-          activo: true,
-          categoriaId: ''
-        });
       },
-
       error: (err) => {
         console.error('Error al crear producto:', err);
-        this.error = 'No se pudo crear el producto';
-        this.cargando = false;
+        this.error.set('No se pudo crear el producto');
+        this.cargando.set(false);
       }
-
     });
-
   }
 }

@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AddCartItemRequest, CartResponse } from '../../../home/interfaces/api-cart.interface';
 import { DecimalPipe } from '@angular/common';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-checkout-product',
@@ -13,40 +14,20 @@ import { DecimalPipe } from '@angular/common';
   styleUrl: './checkout-product.component.css',
 })
 export class CheckoutProductComponent {
-  private apiCartService = inject(ApiCartService);
-  private fb = inject(NonNullableFormBuilder);
+  private readonly apiCartService = inject(ApiCartService);
+  private readonly fb = inject(NonNullableFormBuilder);
+  private readonly router = inject(Router);
 
-  /*private orderUserService = inject(OrderUserService);*/
-  private router = inject(Router);
-
-  readonly cart = signal<CartResponse | null>(null);
   readonly cartCount = this.apiCartService.cartCount;
 
-  /*readonly subtotal = this.apiCartService.subtotal;
-  readonly total = this.cartService.total;*/
-
-
-  constructor() {
-    this.loadCart();
-  }
-
-  loadCart(){
-    this.apiCartService.getCart().subscribe({
-      next: (cart) => {
-        console.log('Carrito cargado:', cart);
-        this.cart.set(cart);
-      },
-      error: (error) => {
-        console.error('Error al cargar carrito:', error);
-      }
-    });
-  }
+  readonly cartResource = rxResource({
+    stream: () => this.apiCartService.getCart(),
+  });
 
   increaseQuantity(productId: number) {
     this.apiCartService.addItem(productId).subscribe({
     next: (cart) => {
-      console.log('Carrito actualizado +:', cart);
-      this.cart.set(cart);
+      this.cartResource.set(cart);
     },
     error: (error) => {
       console.error('Error al agregar producto +:', error);
@@ -57,8 +38,7 @@ export class CheckoutProductComponent {
   decreaseQuantity(productId: number)  {
     this.apiCartService.decreaseItem(productId).subscribe({
     next: (cart) => {
-      console.log('Carrito actualizado -:', cart);
-      this.cart.set(cart);
+      this.cartResource.set(cart);
     },
     error: (error) => {
       console.error('Error al disminuir -:', error);
@@ -69,8 +49,7 @@ export class CheckoutProductComponent {
   removeItem(productId: number)  {
     this.apiCartService.removeItem(productId).subscribe({
     next: (cart) => {
-      console.log('Carrito actualizado remove:', cart);
-      this.cart.set(cart);
+      this.cartResource.set(cart);
     },
     error: (error) => {
       console.error('Error al remove:', error);
@@ -78,12 +57,9 @@ export class CheckoutProductComponent {
   });
   }
 
-  formulario = this.fb.group({
+  readonly formulario = this.fb.group({
     nombre: ['', Validators.required],
-    celular: ['', [Validators.required,
-    Validators.pattern(/^\d{9}$/)
-    ]],
+    celular: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
     direccion: ['', Validators.required]
   });
-
 }

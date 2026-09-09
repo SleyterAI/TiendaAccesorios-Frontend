@@ -39,8 +39,10 @@ export class OrderUserService {
   }*/
 
   //admin
-  changeStatus(id: number, status: string): Observable<StatusRequest> {
-    return this.http.patch<StatusRequest>(`${this.apiUrl}/${id}/status`, { status });
+  changeStatus(id: number, status: string): Observable<string> {
+    return this.http.patch(`${this.apiUrl}/${id}/status`,
+      { order_status: status },
+    { responseType: 'text' });
   }
 
   //admin
