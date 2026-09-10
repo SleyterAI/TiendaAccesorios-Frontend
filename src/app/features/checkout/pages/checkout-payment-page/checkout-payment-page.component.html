@@ -8,8 +8,13 @@
     <button (click)="continuar()"
     >Finalizar compra</button>
 
-    <app-customer-info></app-customer-info>
-    <app-payment-method></app-payment-method>
+    <app-customer-info
+      [customer]="customer()">
+    </app-customer-info>
+
+    <app-payment-method
+      [customer]="customer()">
+    </app-payment-method>
   </div>
 
 </section>

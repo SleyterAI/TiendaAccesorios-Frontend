@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators,  } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
+import { ApiCartService } from '../../../home/services/api-cart.service';
 
 @Component({
   selector: 'app-login-form',
@@ -15,6 +16,7 @@ export class LoginFormComponent {
   private readonly authService = inject(AuthService);
   private readonly router= inject(Router);
   readonly isSubmitting = signal(false);
+  private readonly cartService = inject(ApiCartService);
 
   readonly loginForm = this.fb.nonNullable.group({
     email: ['',[ Validators.required, Validators.email]],
@@ -33,6 +35,7 @@ export class LoginFormComponent {
       next: () => {
         this.router.navigate(['']);
         this.isSubmitting.set(false);
+        this.cartService.getCart().subscribe();
       },
       error: (error) => {
         console.error(error);

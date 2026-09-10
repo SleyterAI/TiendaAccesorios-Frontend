@@ -53,14 +53,6 @@ export const routes: Routes = [
     path: 'messageorderpage',
     component: MessageOrderPageComponent
   },
-  /*canActivate: [authGuard],*/
-  /*
-
-  {
-    //path: 'pedido-confirmacion-page',
-    //component: PedidoConfirmacionPageComponent,
-    //canActivate: [authGuard],
-  },*/
   {
     path: 'admin',
     component: AdminPageComponent,
@@ -95,8 +87,6 @@ export const routes: Routes = [
             component: OrderDetailComponent
           },
         ]
-
-
       },
       /*
       {

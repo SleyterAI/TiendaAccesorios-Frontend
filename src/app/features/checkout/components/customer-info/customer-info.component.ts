@@ -1,6 +1,7 @@
-import { Component, inject, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { UserService } from '../../../auth/services/user.service';
 import { FormsModule, Validators } from '@angular/forms';
+import { Customer } from '../../../auth/interfaces/customer.interface';
 
 @Component({
   selector: 'app-customer-info',
@@ -13,4 +14,5 @@ export class CustomerInfoComponent {
   address = signal('');
   phoneNumber = signal('');
 
+  customer = input<Customer | null>(null);
 }

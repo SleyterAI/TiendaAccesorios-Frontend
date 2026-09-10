@@ -1,14 +1,16 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, effect } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AddCartItemRequest, SyncCartRequest, CartItem, CartResponse, Items } from '../interfaces/api-cart.interface';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiCartService {
   private http = inject(HttpClient);
+  private readonly authService = inject(AuthService);
   private API_URL = `${environment.apiUrl}/cart`;
 
   private readonly _cartItems = signal<CartItem[]>([]);
@@ -20,12 +22,19 @@ export class ApiCartService {
       (total, item) => total + item.quantity, 0)
   );
 
-  private updateCartState(cart: CartResponse): void {
-    this._cartItems.set(cart.items);
+  constructor(){
+    effect(() => {
+      const isAuthenticated = this.authService.isAuthenticated();
+      if (!isAuthenticated) {
+        this._cartItems.set([]);
+        return;
+      }
+      this.getCart().subscribe();
+    });
   }
 
-  constructor(){
-    this.getCart().subscribe();
+  private updateCartState(cart: CartResponse): void {
+    this._cartItems.set(cart.items);
   }
 
   /* METODOS CONSUMEN API */
@@ -33,9 +42,7 @@ export class ApiCartService {
   addItem(productId: number): Observable<CartResponse> {
     return this.http.post<CartResponse>(`${this.API_URL}/item`, { productId })
     .pipe(
-      tap(cart => {
-        this.updateCartState(cart);
-      })
+      tap(cart => {this.updateCartState(cart);})
     );
   }
 
@@ -43,9 +50,7 @@ export class ApiCartService {
   decreaseItem(productId: number): Observable<CartResponse> {
     return this.http.patch<CartResponse>(`${this.API_URL}/item/${productId}/decrease`, {})
     .pipe(
-      tap(cart => {
-        this.updateCartState(cart);
-      })
+      tap(cart => {this.updateCartState(cart);})
     );
   }
 
@@ -53,9 +58,7 @@ export class ApiCartService {
   getCart(): Observable<CartResponse> {
     return this.http.get<CartResponse>(this.API_URL)
     .pipe(
-      tap(cart => {
-        this.updateCartState(cart);
-      })
+      tap(cart => {this.updateCartState(cart);})
     );
   }
 
@@ -63,18 +66,14 @@ export class ApiCartService {
   removeItem(productId: number): Observable<CartResponse> {
     return this.http.delete<CartResponse>(`${this.API_URL}/item/${productId}`)
     .pipe(
-      tap(cart => {
-        this.updateCartState(cart);
-      })
+      tap(cart => {this.updateCartState(cart);})
     );
   }
 
   // Vaciar carrito
   clearCart(): Observable<CartResponse> {
     return this.http.delete<CartResponse>(`${this.API_URL}/clear`).pipe(
-      tap(cart => {
-        this.updateCartState(cart);
-      })
+      tap(cart => {this.updateCartState(cart);})
     );
   }
 

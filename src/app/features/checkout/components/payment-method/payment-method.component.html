@@ -3,11 +3,29 @@
   <div class="form-grid">
     <div class="input-group">
       <label for="card">N° tarjeta:</label>
-      <input id="card" type="text" [(ngModel)]="cardNumber" placeholder="..." />
+      <input id="card" type="text" [value]="customer()?.card?.cardNumber ?? ''" [(ngModel)]="cardNumber"
+        placeholder="Numero de tarjeta" />
     </div>
+
+    <div class="input-group">
+      <label for="expirationDate">Fecha de expiración:</label>
+
+      <mat-form-field appearance="outline">
+        <input matInput id="expirationDate"
+          [matDatepicker]="picker"
+          [(ngModel)]="expirationDate" placeholder="Fecha de expiración"
+          readonly />
+
+        <mat-datepicker-toggle matIconSuffix [for]="picker">
+        </mat-datepicker-toggle>
+
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
     <div class="input-group">
       <label for="cvv">CVV:</label>
-      <input id="cvv" type="password" [(ngModel)]="cvv" placeholder="..." />
+      <input id="cvv" type="password" [(ngModel)]="cvv" placeholder="Codigo" />
     </div>
   </div>
 </div>
