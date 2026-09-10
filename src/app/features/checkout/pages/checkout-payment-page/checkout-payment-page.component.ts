@@ -13,6 +13,7 @@ import { ApiCartService } from '../../../home/services/api-cart.service';
 import { Router } from '@angular/router';
 import { CustomerService } from '../../../auth/services/customer.service';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { CustomerRequest } from '../../../auth/interfaces/customer.interface';
 
 @Component({
   selector: 'app-checkout-payment-page',
@@ -26,7 +27,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
   templateUrl: './checkout-payment-page.component.html',
   styleUrl: './checkout-payment-page.component.css',
 })
-export class CheckoutPaymentPageComponent{
+export class CheckoutPaymentPageComponent {
   @ViewChild(CustomerInfoComponent)
   customerInfo!: CustomerInfoComponent;
 
@@ -45,31 +46,74 @@ export class CheckoutPaymentPageComponent{
   customer = computed(() => this.customerResource.value() ?? null);
 
 
-createOrder(orderRequest: OrderRequest) {
-  this.orderService.createOrder(orderRequest).subscribe({
-    next: (response) => {
-      console.log('Orden creada:', response);
-      this.cartService.clearCart();
-      this.router.navigate(['messageorderpage']);
-    },
-    error: (error) => {
-      console.error('Error:', error);
+  createOrder(orderRequest: OrderRequest) {
+    this.orderService.createOrder(orderRequest).subscribe({
+      next: (response) => {
+        console.log('Orden creada:', response);
+        this.cartService.clearCart();
+        this.router.navigate(['messageorderpage']);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  createCustomer(customer: CustomerRequest) {
+    this.customerService.createCustomer(customer).subscribe({
+      next: () => {
+        console.log('customer creado: ', customer);
+      },
+      error: (error) => {
+        console.log('Error: ', error);
+      }
+
+    })
+  }
+
+  updateCustomer(customer: CustomerRequest) {
+    this.customerService.updateCustomer(customer).subscribe({
+      next: (response) => {
+        console.log('Customer actualizado:', response);
+        this.customerResource.reload();
+      },
+      error: (error) => {
+        console.error('Error actualizando customer:', error);
+      }
+    });
+  }
+
+  continuar() {
+    const name = this.customerInfo.name();
+    const lastName = this.customerInfo.lastName();
+    const address = this.customerInfo.address();
+    const phoneNumber = this.customerInfo.phoneNumber();
+
+    const cardNumber = this.paymentMethod.cardNumber();
+    const expirationDate = this.paymentMethod.expirationDate();
+
+    const orderRequest: OrderRequest = {
+      address: address,
+      phoneNumber: phoneNumber
+    };
+
+    const customerRequest: CustomerRequest = {
+      name,
+      lastName,
+      address,
+      phoneNumber,
+      card: {
+        cardNumber,
+        expirationDate
+      }
+    };
+
+    this.createOrder(orderRequest);
+    if (this.customer()) {
+      this.updateCustomer(customerRequest);
+    } else {
+      this.createCustomer(customerRequest);
     }
-  });
 
-}
-
-continuar() {
-  const name = this.customerInfo.name();
-
-
-  const address = this.customerInfo.address();
-  const phoneNumber = this.customerInfo.phoneNumber();
-
-  const orderRequest: OrderRequest = {
-    address: address,
-    phoneNumber: phoneNumber
-  };
-  this.createOrder(orderRequest);
-}
+  }
 }

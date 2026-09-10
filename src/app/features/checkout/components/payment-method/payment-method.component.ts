@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, effect, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Customer } from '../../../auth/interfaces/customer.interface';
 
@@ -25,4 +25,15 @@ export class PaymentMethodComponent {
   expirationDate = signal('');
 
   customer = input<Customer | null>(null);
+
+  constructor() {
+    effect(() => {
+      const customer = this.customer();
+
+      if (customer) {
+        this.cardNumber.set(customer.card.cardNumber);
+        this.expirationDate.set(customer.card.expirationDate);
+      }
+    });
+  }
 }

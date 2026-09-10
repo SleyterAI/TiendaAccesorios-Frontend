@@ -3,7 +3,9 @@
   <div class="form-grid">
     <div class="input-group">
       <label for="card">N° tarjeta:</label>
-      <input id="card" type="text" [value]="customer()?.card?.cardNumber ?? ''" [(ngModel)]="cardNumber"
+      <input id="card" type="text"
+
+      [(ngModel)]="cardNumber"
         placeholder="Numero de tarjeta" />
     </div>
 

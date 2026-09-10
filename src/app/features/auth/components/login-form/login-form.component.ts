@@ -38,7 +38,7 @@ export class LoginFormComponent {
         this.cartService.getCart().subscribe();
       },
       error: (error) => {
-        console.error(error);
+        console.error('login-form: ',error);
         this.isSubmitting.set(false);
       }
     });

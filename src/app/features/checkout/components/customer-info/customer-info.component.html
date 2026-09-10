@@ -4,19 +4,25 @@
     <div class="input-group">
       <label for="name">Nombre:</label>
       <input id="name" type="text"
-        [value]="customer()?.name"
-        [(ngModel)]="name" placeholder="Nombre completo" />
+
+        [(ngModel)]="name" placeholder="Nombre" />
+    </div>
+    <div class="input-group">
+      <label for="lastName">Apellido:</label>
+      <input id="lastName" type="text"
+
+        [(ngModel)]="lastName" placeholder="Apellido completo" />
     </div>
     <div class="input-group">
       <label for="address">Dirección:</label>
       <input id="address" type="text"
-        [value]="customer()?.address"
+
         [(ngModel)]="address" placeholder="Direccion" />
     </div>
     <div class="input-group">
       <label for="email">Celular:</label>
       <input id="email" type="email"
-        [value]="customer()?.phoneNumber"
+
         [(ngModel)]="phoneNumber" placeholder="Numero de celular" />
     </div>
   </div>
