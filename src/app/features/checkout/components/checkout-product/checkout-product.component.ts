@@ -3,7 +3,6 @@ import { ApiCartService } from '../../../home/services/api-cart.service';
 import { OrderUserService } from '../../services/order-user.service';
 import { Router, RouterLink } from '@angular/router';
 import { NonNullableFormBuilder, Validators } from '@angular/forms';
-import { AddCartItemRequest, CartResponse } from '../../../home/interfaces/api-cart.interface';
 import { DecimalPipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 

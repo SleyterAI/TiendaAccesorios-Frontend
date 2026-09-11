@@ -1,11 +1,4 @@
-export interface AddCartItemRequest {
-  productId: number;
-  /*quantity: number;*/
-}
-
-export interface SyncCartRequest {
-  items: AddCartItemRequest[];
-}
+import { Producto } from "../../product/interfaces/product.interface";
 
 export interface CartItem {
   id: number;
@@ -21,6 +14,43 @@ export interface CartResponse {
 }
 
 export interface Items {
+  id: number;
+  productId: number;
+  productName: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+  subTotal: number;
+}
+
+//duda......
+export interface LocalCartItem {
+  productId: number;
+  quantity: number;
+}
+
+export interface FullCartItem{
+  producto: Producto;
+  cantidad: number;
+}
+
+//....ready
+export interface SyncCartRequest {
+  items: CartItemRequest[];
+}
+
+export interface CartItemRequest {
+  productId: number;
+  quantity: number;
+}
+
+export interface SyncCartResponse {
+  id: number;
+  totalPrice: number;
+  items: CartItemResponse[];
+}
+
+export interface CartItemResponse {
   id: number;
   productId: number;
   productName: string;

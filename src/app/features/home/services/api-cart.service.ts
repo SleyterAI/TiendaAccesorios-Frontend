@@ -2,7 +2,7 @@ import { Injectable, inject, signal, computed, effect } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AddCartItemRequest, SyncCartRequest, CartItem, CartResponse, Items } from '../interfaces/api-cart.interface';
+import { SyncCartRequest, CartItem, CartResponse, SyncCartResponse } from '../interfaces/api-cart.interface';
 import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
@@ -78,10 +78,7 @@ export class ApiCartService {
   }
 
   // Sincronizar carrito local con el carrito del usuario
-  syncCart(request: SyncCartRequest): Observable<CartItem[]> {
-    return this.http.put<CartItem[]>(`${this.API_URL}/sync`, request);
+  syncCart(items: SyncCartRequest): Observable<SyncCartResponse> {
+    return this.http.put<SyncCartResponse>(`${this.API_URL}/sync`, items);
   }
-
-
-
 }
