@@ -28,6 +28,10 @@ export class ProductService {
     return this.http.get<Producto>(`${this.apiUrl}/${id}`);
   }
 
+  getProductByIdCart(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
   //Admin methods
   createProducto(producto: ProductRequest): Observable<ProductRequest> {
     return this.http.post<ProductRequest>(this.apiUrl, producto);

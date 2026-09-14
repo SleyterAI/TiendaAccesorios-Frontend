@@ -7,7 +7,9 @@ import { switchMap } from 'rxjs';
 import { DecimalPipe } from '@angular/common';
 import { HeaderComponent } from '../../../home/components/header/header.component';
 import { FooterComponent } from '../../../home/components/footer/footer.component';
-import { Product, Producto } from '../../interfaces/product.interface';
+import { Product } from '../../interfaces/product.interface';
+import { AuthService } from '../../../auth/services/auth.service';
+import { LocalCartService } from '../../../home/services/local-cart.service';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -17,22 +19,30 @@ import { Product, Producto } from '../../interfaces/product.interface';
 })
 export class ProductDetailPageComponent {
   private route = inject(ActivatedRoute);
-  private productService = inject(ProductService);
-  private cartService = inject(ApiCartService);
+  private readonly productService = inject(ProductService);
+  private readonly apiCartService = inject(ApiCartService);
+  private readonly localCartService = inject(LocalCartService);
+  private readonly authService = inject(AuthService);
 
-  producto = toSignal(
+  product = toSignal(
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = Number(params.get('id'));
-        return this.productService.getProductById(id);
+        return this.productService.getProductByIdCart(id);
       })
     ),
     { initialValue: null }
   );
 
-  addToCart(product: Producto): void {
-    this.cartService.addItem(product.id).subscribe();
+  addToCart(product: Product): void {
+    if (this.authService.isAuthenticated()) {
+      this.apiCartService.addItem(product.id).subscribe();
+    }else{
+      this.localCartService.addToCart(product);
+      console.log('Added to local storage cart')
+    }
+
   }
 
-  cartCount = this.cartService.cartCount;
+  cartCount = this.apiCartService.cartCount;
 }

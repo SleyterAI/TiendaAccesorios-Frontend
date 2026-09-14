@@ -1,5 +1,5 @@
 <app-header></app-header>
-@if (producto(); as producto) {
+@if (product(); as product) {
   <main class="product-detail">
     <div class="product-container">
 
@@ -9,8 +9,8 @@
         <section class="product-image-section">
           <div class="product-image-wrapper">
             <img
-              [src]="producto.imageUrl"
-              [alt]="producto.name"
+              [src]="product.imageUrl"
+              [alt]="product.name"
               class="product-image"
             />
           </div>
@@ -20,23 +20,23 @@
         <section class="product-info">
 
           <span class="product-category">
-            {{ producto.category.name }}
+            {{ product.categoryName }}
           </span>
 
           <h1 class="product-title">
-            {{ producto.name }}
+            {{ product.name }}
           </h1>
 
           <div class="product-price">
-            S/ {{ producto.price | number:'1.2-2' }}
+            S/ {{ product.price | number:'1.2-2' }}
           </div>
 
-          @if (producto.stock > 0) {
+          @if (product.stock > 0) {
             <div class="stock stock-available">
               <span class="stock-dot"></span>
               Disponible
               <span class="stock-quantity">
-                {{ producto.stock }} unidades
+                {{ product.stock }} unidades
               </span>
             </div>
           } @else {
@@ -52,18 +52,18 @@
             <h3>Descripción</h3>
 
             <p>
-              {{ producto.description }}
+              {{ product.description }}
             </p>
           </div>
 
           <div class="product-actions">
 
-            @if (producto.stock > 0 && producto.visible) {
+            @if (product.stock > 0 && product.visible) {
 
               <button
                 type="button"
                 class="btn-add-cart"
-                (click)="addToCart(producto)">
+                (click)="addToCart(product)">
                 <span class="cart-icon"
                 >
                 🛒</span>
