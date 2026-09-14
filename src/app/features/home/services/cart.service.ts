@@ -19,9 +19,9 @@ export class CartService {
     const items = this.localCart.cartProducts();
 
     const request: SyncCartRequest = {
-      items: items.map(({ producto, cantidad }) => ({
-        productId: producto.id,
-        quantity: cantidad
+      items: items.map(({ product, quantity }) => ({
+        productId: product.id,
+        quantity: quantity
       }))
     };
 

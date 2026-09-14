@@ -20,7 +20,7 @@ export class ProductCardComponent {
   readonly auth = this.authService.isAuthenticated();
 
   //forma para poder enviar info al componente padre
-  agregar = output<Product>();
+  //agregar = output<Product>();
 
   //se envia al producto
   addToCart(): void {
@@ -36,9 +36,10 @@ export class ProductCardComponent {
         }
       });
     } else {
-      console.log('error en product-card, needs update for syncCart ')
-      console.log('user with no acc can add items to cart too¡¡ ')
-      //this.localService.addToCart(this.product());
+      //console.log('error en product-card, needs update for syncCart ')
+
+      this.localService.addToCart(this.product());
+      console.log('Se agrego al carrito')
     }
   }
 }

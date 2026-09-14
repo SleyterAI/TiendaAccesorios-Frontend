@@ -38,7 +38,7 @@ export const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutPageComponent,
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
   },
   {
     path: 'checkout/payment',

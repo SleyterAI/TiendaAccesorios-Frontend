@@ -1,6 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { Producto } from '../../product/interfaces/product.interface';
-import { CartItem, FullCartItem } from '../interfaces/api-cart.interface';
+import { Product } from '../../product/interfaces/product.interface';
+import { CartItem, CartResponse, FullCartItem } from '../interfaces/api-cart.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,31 +13,31 @@ export class LocalCartService {
 
   //Cantidad total de unidades
   readonly cartCount = computed(() =>
-    this.cartProducts().reduce((total, item) => total + item.cantidad, 0));
+    this.cartProducts().reduce((total, item) => total + item.quantity, 0));
 
   // Subtotal general
   subtotal = computed(() => this.cartProducts().reduce(
-      (total, item) => total + (item.producto.price * item.cantidad), 0)
+      (total, item) => total + (item.product.price * item.quantity), 0)
   );
 
   // Por ahora el total es igual al subtotal
   readonly total = computed(() => this.subtotal());
 
-  addToCart(producto: Producto): void {
+  addToCart(product: Product): void {
     this.cartProducts.update(items => {
       const itemExistente = items.find(
-        item => item.producto.id === producto.id
+        item => item.product.id === product.id
       );
 
       if (itemExistente) {
         return items.map(item =>
-          item.producto.id === producto.id
-          ?{...item, cantidad: item.cantidad + 1}
+          item.product.id === product.id
+          ?{...item, quantity: item.quantity + 1}
           : item
         );
       }
 
-      return [...items, {producto,cantidad: 1}];
+      return [...items, {product, quantity: 1}];
     });
 
     this.saveCart();
@@ -47,8 +47,8 @@ export class LocalCartService {
   increaseQuantity(productoId: number): void {
     this.cartProducts.update(items =>
       items.map(item =>
-        item.producto.id === productoId
-          ? { ...item, cantidad: item.cantidad + 1 }
+        item.product.id === productoId
+          ? { ...item, quantity: item.quantity + 1 }
           : item
       )
     );
@@ -60,10 +60,10 @@ export class LocalCartService {
     this.cartProducts.update(items =>
       items
         .map(item =>
-          item.producto.id === productoId
-            ? { ...item, cantidad: item.cantidad - 1 }
+          item.product.id === productoId
+            ? { ...item, quantity: item.quantity - 1 }
             : item)
-        .filter(item => item.cantidad > 0)
+        .filter(item => item.quantity > 0)
     );
     this.saveCart();
   }
@@ -71,7 +71,7 @@ export class LocalCartService {
   // Eliminar completamente un producto
   removeFromCart(productoId: number): void {
     this.cartProducts.update(items =>
-      items.filter(item => item.producto.id !== productoId)
+      items.filter(item => item.product.id !== productoId)
     );
     this.saveCart();
   }
@@ -84,7 +84,7 @@ export class LocalCartService {
   }
 
   //cargar cart
-  private loadCart(): FullCartItem[] {
+  loadCart(): FullCartItem[] {
     const storedCart = localStorage.getItem(this.STORAGE_KEY);
 
     if (!storedCart) return [];
@@ -96,6 +96,28 @@ export class LocalCartService {
       return [];
     }
   }
+
+  getCart(): CartResponse {
+  const items = this.loadCart();
+
+  return {
+    id: 0,
+    totalPrice: items.reduce(
+      (total, item) => total + item.product.price * item.quantity,
+      0
+    ),
+    items: items.map(item => ({
+      id: 0,
+      productId: item.product.id,
+      productName: item.product.name,
+      imageUrl: item.product.imageUrl,
+      price: item.product.price,
+      quantity: item.quantity,
+      subTotal: item.product.price * item.quantity
+    }))
+  };
+}
+
 
   clearCart(): void {
     this.cartProducts.set([]);

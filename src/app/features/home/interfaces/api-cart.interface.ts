@@ -1,4 +1,4 @@
-import { Producto } from "../../product/interfaces/product.interface";
+import { Product } from "../../product/interfaces/product.interface";
 
 export interface CartItem {
   id: number;
@@ -29,9 +29,10 @@ export interface LocalCartItem {
   quantity: number;
 }
 
+// duda updated
 export interface FullCartItem{
-  producto: Producto;
-  cantidad: number;
+  product: Product; //se cambio de Producto
+  quantity: number;
 }
 
 //....ready
