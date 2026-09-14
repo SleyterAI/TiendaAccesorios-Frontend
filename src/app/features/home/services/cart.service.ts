@@ -25,6 +25,10 @@ export class CartService {
       }))
     };
 
-    return this.apiCart.syncCart(request);
+    return this.apiCart.syncCart(request).pipe(
+      tap(() => {
+        this.localCart.clearCart();
+      })
+    );
   }
 }

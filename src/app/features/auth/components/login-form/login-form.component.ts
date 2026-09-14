@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators,  } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
 import { ApiCartService } from '../../../home/services/api-cart.service';
+import { CartService } from '../../../home/services/cart.service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,7 +17,7 @@ export class LoginFormComponent {
   private readonly authService = inject(AuthService);
   private readonly router= inject(Router);
   readonly isSubmitting = signal(false);
-  private readonly cartService = inject(ApiCartService);
+  private readonly cartService = inject(CartService);
 
   readonly loginForm = this.fb.nonNullable.group({
     email: ['',[ Validators.required, Validators.email]],
@@ -33,8 +34,20 @@ export class LoginFormComponent {
 
     this.authService.login(request).subscribe({
       next: () => {
-        this.router.navigate(['']);
-        this.isSubmitting.set(false);
+        this.cartService.syncCart().subscribe({
+          next: () => {
+            console.log('sync correct');
+            this.isSubmitting.set(false);
+            this.router.navigate(['']);
+          },
+          error: error => {
+            console.error('Error sincronizando carrito:', error);
+
+            // El login ya fue exitoso.
+            this.isSubmitting.set(false);
+            this.router.navigate(['']);
+          }
+        });
         //this.cartService.getCart().subscribe();
       },
       error: (error) => {

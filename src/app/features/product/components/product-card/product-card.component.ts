@@ -32,14 +32,14 @@ export class ProductCardComponent {
           /*this.agregar.emit(this.product());*/
         },
         error: (error) => {
-          console.error('Error al agregar producto:', error);
+          console.error('Error adding product api cart service:', error);
         }
       });
     } else {
       //console.log('error en product-card, needs update for syncCart ')
 
       this.localService.addToCart(this.product());
-      console.log('Se agrego al carrito')
+      console.log('Added to local storage cart')
     }
   }
 }
