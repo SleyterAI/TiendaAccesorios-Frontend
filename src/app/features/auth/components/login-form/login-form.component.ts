@@ -35,7 +35,7 @@ export class LoginFormComponent {
       next: () => {
         this.router.navigate(['']);
         this.isSubmitting.set(false);
-        this.cartService.getCart().subscribe();
+        //this.cartService.getCart().subscribe();
       },
       error: (error) => {
         console.error('login-form: ',error);
